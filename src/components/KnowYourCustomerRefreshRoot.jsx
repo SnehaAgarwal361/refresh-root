@@ -7,7 +7,7 @@ import { Helmet } from 'react-helmet';
 import childRoutes from '../childRoutes';
 import Welcome from './Welcome/Welcome';
 
-const KnowYourCustomerRefreshRoot = ({ languageData, locale }) => Object.entries(languageData).length > 0 && (
+const KYCRefreshRoot = ({ languageData, locale }) => Object.entries(languageData).length > 0 && (
 <IntlProvider locale={locale} messages={languageData}>
   <Helmet
     link={[
@@ -21,30 +21,30 @@ const KnowYourCustomerRefreshRoot = ({ languageData, locale }) => Object.entries
 </IntlProvider>
 );
 
-export const TestableKnowYourCustomerRefreshRoot = KnowYourCustomerRefreshRoot;
+export const TestableKnowYourCustomerRefreshRoot = KYCRefreshRoot;
 
-KnowYourCustomerRefreshRoot.propTypes = {
+KYCRefreshRoot.propTypes = {
   languageData: PropTypes.shape({}).isRequired, // no need to restate all the keys in the lang pack
   locale: PropTypes.string.isRequired,
 };
 
 // Read about childRoutes:
 // https://github.com/americanexpress/one-app/blob/main/docs/api/modules/Routing.md#childroutes
-KnowYourCustomerRefreshRoot.childRoutes = childRoutes;
+KYCRefreshRoot.childRoutes = childRoutes;
 
 // Read about appConfig:
 // https://github.com/americanexpress/one-app/blob/main/docs/api/modules/App-Configuration.md
 /* istanbul ignore next */
 if (!global.BROWSER) {
   // eslint-disable-next-line global-require -- require needs to be inside browser check
-  KnowYourCustomerRefreshRoot.appConfig = require('../appConfig').default;
+  KYCRefreshRoot.appConfig = require('../appConfig').default;
 }
 
 export const loadModuleData = ({ store: { dispatch } }) => dispatch(loadLanguagePack('know-your-customer-refresh-root', { fallbackLocale: 'en-US' }));
 
-KnowYourCustomerRefreshRoot.holocron = {
+KYCRefreshRoot.holocron = {
   name: 'know-your-customer-refresh-root',
   loadModuleData,
 };
 
-export default oneAppModuleWrapper('know-your-customer-refresh-root')(KnowYourCustomerRefreshRoot);
+export default oneAppModuleWrapper('know-your-customer-refresh-root')(KYCRefreshRoot);
