@@ -1,0 +1,50 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Cards should render as expected module should render correct JSX 1`] = `
+<Fragment>
+  <div
+    className="dls-gray-02-bg pad-responsive"
+  >
+    <div
+      className="row stack-sm-down"
+    >
+      <Card
+        bodyIntlIds={
+          Array [
+            "cards.oneApp.body1",
+            "cards.oneApp.body2",
+          ]
+        }
+        cardLgCols={4}
+        linkTextIntlId="cards.oneApp.linkText"
+        linkUrl="https://one-dev.aexp.com/one-app/developer-guide/"
+        titleIntlId="cards.oneApp.title"
+      />
+      <Card
+        bodyIntlIds={
+          Array [
+            "cards.oneDLS.body1",
+            "cards.oneDLS.body2",
+          ]
+        }
+        cardLgCols={4}
+        linkTextIntlId="cards.oneDLS.linkText"
+        linkUrl="https://one-dev.aexp.com/v1/one-dls/"
+        titleIntlId="cards.oneDLS.title"
+      />
+      <Card
+        bodyIntlIds={
+          Array [
+            "cards.community.body1",
+            "cards.community.body2",
+          ]
+        }
+        cardLgCols={4}
+        linkTextIntlId="cards.community.linkText"
+        linkUrl="https://aexp-mobile-and-web.slack.com/archives/C4Z5SV0K0"
+        titleIntlId="cards.community.title"
+      />
+    </div>
+  </div>
+</Fragment>
+`;

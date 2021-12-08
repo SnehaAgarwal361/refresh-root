@@ -1,0 +1,85 @@
+{
+  "name": "know-your-customer-refresh-root",
+  "version": "1.0.0",
+  "description": "Used to create UI for all the configurable properties in the international kyc refresh application",
+  "contributors": [
+    " Nagaraj VC <nagaraj.v.chandrashekar@amex.com>",
+    "Chris Nicolas Gilbert <christopher.n.gilbert@aexp.com>"
+  ],
+  "scripts": {
+    "start": "one-app-runner",
+    "prebuild": "npm run clean",
+    "build": "bundle-module",
+    "watch:build": "npm run build -- --watch",
+    "clean": "rimraf build",
+    "prepare": "npm run build && npm run test:unit && npm run test:lint -- --fix && npm run test:browser",
+    "pretest:a11y": "create-runner-env && one-app-runner-test",
+    "pretest:browser": "npm run build && create-runner-env && one-app-runner-test",
+    "test": " npm run test:lint && npm run test:unit && npm run test:browser && npm run test:a11y",
+    "test:a11y": "jest a11y --preset @americanexpress/jest-preset-browser",
+    "test:browser": "jest /browser/ --preset @americanexpress/jest-preset-browser --runInBand",
+    "test:lint": "eslint --ignore-path .gitignore --ext js,jsx,snap .",
+    "test:unit": "jest --testPathIgnorePatterns /browser/ /a11y/"
+  },
+  "one-amex": {
+    "app": {
+      "compatibility": "^5.0.0"
+    },
+    "product-contacts": [
+      "Anil Kumar Sanathi <anil.k.sanathi@aexp.com>",
+      "Simon John Fletcher <simon.j.fletcher@aexp.com>"
+    ],
+    "runner": {
+      "modules": [
+        "."
+      ],
+      "rootModuleName": "know-your-customer-refresh-root",
+      "dockerImage": "dockerproxy.aexp.com/oneamex/one-app-dev:latest",
+      "envVars": {
+        "ONE_CONFIG_ENV": "e1"
+      }
+    },
+    "risk": {
+      "level": "low"
+    }
+  },
+  "dependencies": {
+    "@americanexpress/content-security-policy": "^2.32.0",
+    "@americanexpress/one-app-router": "^1.1.0",
+    "@americanexpress/dls-react": "^1.22.1",
+    "react-helmet": "^6.1.0",
+    "@americanexpress/one-app-ducks": "^4.3.3",
+    "@americanexpress/one-app-module-wrapper": "^3.3.1",
+    "holocron": "^1.1.4",
+    "prop-types": "^15.7.2",
+    "react": "^16.13.1",
+    "react-intl": "^5.20.10"
+  },
+  "devDependencies": {
+    "@americanexpress/jest-a11y": "^3.0.3",
+    "@americanexpress/jest-preset-browser": "^4.2.0",
+    "@americanexpress/one-app-bundler": "^6.12.0",
+    "@americanexpress/one-app-runner": "^6.12.0",
+    "@babel/polyfill": "^7.10.4",
+    "amex-jest-preset-react": "^6.1.0",
+    "babel-eslint": "^10.1.0",
+    "babel-preset-amex": "^3.5.0",
+    "enzyme": "^3.11.0",
+    "enzyme-to-json": "^3.6.1",
+    "eslint": "^7.32.0",
+    "eslint-config-amex": "^15.0.0",
+    "eslint-plugin-jest": "^24.5.0",
+    "eslint-plugin-jest-dom": "^3.9.2",
+    "jest": "^26.6.3",
+    "jest-image-snapshot": "^4.0.2",
+    "one-amex-test-utils": "^6.2.0",
+    "rimraf": "^3.0.2",
+    "typescript": "^4.4.3"
+  },
+  "jest": {
+    "preset": "amex-jest-preset-react",
+    "setupFiles": [
+      "./test-setup.js"
+    ]
+  }
+}

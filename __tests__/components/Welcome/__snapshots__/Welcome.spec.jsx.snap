@@ -1,0 +1,51 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Welcome should render as expected module should render correct JSX 1`] = `
+<Fragment>
+  <HelmetWrapper
+    defer={true}
+    encodeSpecialCharacters={true}
+  >
+    <title>
+      translated string for id: helmet.title
+    </title>
+  </HelmetWrapper>
+  <Header />
+  <div
+    className="dls-container"
+  >
+    <div
+      className="container"
+    >
+      <div
+        className="flex flex-column flex-justify-center flex-align-center pad-4"
+      >
+        <h1
+          className="heading-6"
+        >
+           One App 
+        </h1>
+        <h2
+          className="heading-5"
+        >
+           know-your-customer-refresh-root 
+        </h2>
+      </div>
+      <Cards />
+      <div
+        className="dls-gray-02-bg pad-responsive"
+      >
+        <Card
+          bodyIntlIds={
+            Array [
+              "cards.nextSteps.body1",
+            ]
+          }
+          cardLgCols={null}
+          titleIntlId="cards.nextSteps.title"
+        />
+      </div>
+    </div>
+  </div>
+</Fragment>
+`;

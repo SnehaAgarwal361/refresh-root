@@ -1,0 +1,7 @@
+{
+  "extends": "amex/test",
+  "globals": {
+    "testHost": "readonly",
+    "port": "readonly"
+  }
+}

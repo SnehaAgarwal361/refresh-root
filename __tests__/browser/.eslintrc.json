@@ -1,0 +1,9 @@
+{
+  "extends": "amex/test",
+  "globals": {
+    "testHost": "false",
+    "seleniumServerPort": "false",
+    "port": "false",
+    "devProxyServerPort": "false"
+  }
+}

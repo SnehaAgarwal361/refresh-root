@@ -1,0 +1,97 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Card should render as expected module should render correct JSX 1`] = `
+<div
+  className="col-md-12 col-lg-4"
+>
+  <div
+    className="card card-relative pad-responsive"
+  >
+    <div
+      className="pad-responsive"
+    >
+      <h1
+        className="heading-5 dls-gray-05"
+      >
+        <FormattedMessageMock
+          id="titleIntlIdMock"
+        />
+      </h1>
+    </div>
+    <hr />
+    <div
+      className="pad-responsive"
+    >
+      <p
+        className="body-1 dls-gray-05 pad-r-1"
+      >
+        <FormattedMessageMock
+          id="body1IntlIdMock"
+        />
+      </p>
+    </div>
+    <div
+      className="pad-responsive"
+    >
+      <Anchor
+        href="linkUrlMock"
+        onClick={[Function]}
+        rel="noopener noreferrer"
+        target="_blank"
+      >
+        <FormattedMessageMock
+          id="linkTextIntlIdMock"
+        />
+      </Anchor>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Card should render as expected module should render correct JSX with no columns 1`] = `
+<div
+  className=""
+>
+  <div
+    className="card card-relative pad-responsive"
+  >
+    <div
+      className="pad-responsive"
+    >
+      <h1
+        className="heading-5 dls-gray-05"
+      >
+        <FormattedMessageMock
+          id="titleIntlIdMock"
+        />
+      </h1>
+    </div>
+    <hr />
+    <div
+      className="pad-responsive"
+    >
+      <p
+        className="body-1 dls-gray-05 pad-r-1"
+      >
+        <FormattedMessageMock
+          id="body1IntlIdMock"
+        />
+      </p>
+    </div>
+    <div
+      className="pad-responsive"
+    >
+      <Anchor
+        href="linkUrlMock"
+        onClick={[Function]}
+        rel="noopener noreferrer"
+        target="_blank"
+      >
+        <FormattedMessageMock
+          id="linkTextIntlIdMock"
+        />
+      </Anchor>
+    </div>
+  </div>
+</div>
+`;
