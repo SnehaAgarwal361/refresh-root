@@ -1,13 +1,17 @@
 import React from 'react';
+import { compose } from 'redux';
 import oneAppModuleWrapper from '@americanexpress/one-app-module-wrapper';
 import { IntlProvider } from 'react-intl';
 import { loadLanguagePack } from '@americanexpress/one-app-ducks';
 import PropTypes from 'prop-types';
 import { Helmet } from 'react-helmet';
 import childRoutes from '../childRoutes';
-import Welcome from './Welcome/Welcome';
+import { withRouter } from '@americanexpress/one-app-router';
+import Home from './Home';
+import Header from './GlobalHeader/Header';
+import ApplicationProperties from './ApplicationProperties';
 
-const KYCRefreshRoot = ({ languageData, locale }) => Object.entries(languageData).length > 0 && (
+const KYCRefreshRoot = ({ languageData, locale, router, children }) => Object.entries(languageData).length > 0 && (
 <IntlProvider locale={locale} messages={languageData}>
   <Helmet
     link={[
@@ -17,7 +21,9 @@ const KYCRefreshRoot = ({ languageData, locale }) => Object.entries(languageData
       },
     ]}
   />
-  <Welcome />
+  <Header push={router.push}/>
+  {children}
+  {/* <ApplicationProperties /> */}
 </IntlProvider>
 );
 
@@ -47,4 +53,8 @@ KYCRefreshRoot.holocron = {
   loadModuleData,
 };
 
-export default oneAppModuleWrapper('know-your-customer-refresh-root')(KYCRefreshRoot);
+//export default oneAppModuleWrapper('know-your-customer-refresh-root')(KYCRefreshRoot);
+export default compose(
+  oneAppModuleWrapper('know-your-customer-refresh-root'),
+  withRouter
+)(KYCRefreshRoot);
