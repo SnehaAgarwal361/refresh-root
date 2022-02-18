@@ -12,7 +12,7 @@ import {
 } from '@americanexpress/dls-react';
 import { FormattedMessage } from 'react-intl';
 
-const Header = ({push}) => (
+const Header = ({ push }) => (
   <header
     id="dls-nav"
     className="nav nav-large nav-horizontal nav-header dls-bright-blue-bg dls-white"
@@ -50,7 +50,5 @@ const Header = ({push}) => (
     </div>
   </header>
 );
-
-Header.propTypes = {};
 
 export default Header;

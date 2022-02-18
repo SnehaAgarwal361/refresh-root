@@ -1,0 +1,14 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`childRoutes should have the proper routes 1`] = `
+Array [
+  <Route
+    component={[Function]}
+    path="/home"
+  />,
+  <Route
+    component={[Function]}
+    path="/application-properties"
+  />,
+]
+`;

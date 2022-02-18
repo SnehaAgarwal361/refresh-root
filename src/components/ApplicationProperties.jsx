@@ -4,9 +4,7 @@ import {
   Label,
   Select,
   SelectOption,
-  ButtonPrimary
-} from '@americanexpress/dls-react';
-import {
+  ButtonPrimary,
   DataTableV2,
   DataTableHeadV2,
   DataTableBodyV2,
@@ -16,17 +14,28 @@ import {
   Search,
   Pagination,
 } from '@americanexpress/dls-react';
-import { data } from '../mocks/applicationFilters';
-import { apiTableData } from '../mocks/tableData';
+import { useOneDataFetchye } from '@americanexpress/fetchye-amex';
+import styles from './styles.scss';
+import { data } from '../../mocks/applicationFilters';
 
 const ApplicationProperties = () => {
-
   const { formatMessage } = useIntl();
-  const { applicationFilter, setApplicationFilter } = useState('');
+  const [applicationFilter, setApplicationFilter] = useState('');
   const [itemsPerPage, setItemsPerPage] = useState(5);
   const [currentPage, setCurrentPage] = useState(1);
-  const [tableData, setTableData] = useState(apiTableData);
+  const [tableData, setTableData] = useState(null);
   const [searchTerm, setSearchTerm] = useState('');
+
+  const {
+ isLoading, applicationData, error, run 
+} = useOneDataFetchye(
+    'ReadKnowYourCustomerRefreshApplicationProperties.v1',
+    {
+      defer: true,
+      body: {
+        applicationName: applicationFilter,
+      },
+    });
 
   const handleDropDownChange = (event) => {
     setItemsPerPage(Number(event.target.value));
@@ -37,11 +46,22 @@ const ApplicationProperties = () => {
     setCurrentPage(page);
   };
 
+  const searchClick = (event) => {
+    event.preventDefault();
+    run().then((x) => {
+      if (!x.error && x.data) setTableData(x.data.body);
+      else setTableData([]);
+    });
+  };
+
   const paginatedRows = useMemo(() => {
+    const markup = [];
+
+    if (!tableData) return markup;
+
     const beginIndex = (currentPage - 1) * itemsPerPage;
     let endIndex = beginIndex + itemsPerPage;
     endIndex = endIndex < tableData.length ? beginIndex + itemsPerPage : tableData.length;
-    const markup = [];
     for (let i = beginIndex; i < endIndex; i += 1) {
       markup.push(tableData[i]);
     }
@@ -49,24 +69,80 @@ const ApplicationProperties = () => {
   }, [tableData, currentPage, itemsPerPage]);
 
   const searchTermHandler = (e) => {
+    if (!tableData) return markup;
+
     const searchTerm = e.target.value;
-    const filteredData = apiTableData.filter((row) => {
-      return row.application_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    const filteredData = tableData.filter((row) => row.applicationName.toLowerCase().includes(searchTerm.toLowerCase()) ||
         row.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
         row.group.toLowerCase().includes(searchTerm.toLowerCase()) ||
         row.value.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        row.description.toLowerCase().includes(searchTerm.toLowerCase())
-    });
+        row.description.toLowerCase().includes(searchTerm.toLowerCase()));
     setSearchTerm(searchTerm);
     setTableData(filteredData);
-  }
+  };
 
-  const searchClick = () => {
-
-  }
+  const onApplicationFilterChange = (e) => {
+    const selectedApplication = data.find((a) => a.id == e.target.value);
+    if (selectedApplication) setApplicationFilter(selectedApplication.friendlyName);
+  };
 
   const resetClick = () => {
     setApplicationFilter('');
+  };
+
+  const getTable = () => {
+    if (!isLoading && tableData != null) {
+
+      return <>
+        <div className="flex flex-justify-end col-md-12">
+          <Label className="flex flex-align-center pad-1-r">
+            <FormattedMessage id="records.per.page" />
+          </Label>
+          <div className="col-md-1">
+            <Select
+              id="dt-v2-p-select"
+              onChange={handleDropDownChange}
+              value={itemsPerPage}
+            >
+              <SelectOption value="5">5</SelectOption>
+              <SelectOption value="7">7</SelectOption>
+              <SelectOption value="10">10</SelectOption>
+            </Select>
+          </div>
+        </div>
+        <div className="row margin-1">
+          <DataTableV2 small={true} id="tablev2-small-instance">
+            <DataTableHeadV2>
+              <DataTableRowV2>
+                <DataTableHeadCellV2><FormattedMessage id="property.app.name" /></DataTableHeadCellV2>
+                <DataTableHeadCellV2><FormattedMessage id="property.name" /></DataTableHeadCellV2>
+                <DataTableHeadCellV2><FormattedMessage id="group" /></DataTableHeadCellV2>
+                <DataTableHeadCellV2><FormattedMessage id="description" /></DataTableHeadCellV2>
+                <DataTableHeadCellV2 align="right"><FormattedMessage id="value" /></DataTableHeadCellV2>
+              </DataTableRowV2>
+            </DataTableHeadV2>
+            <DataTableBodyV2>
+              {paginatedRows.map((row, i, a) =>
+                <DataTableRowV2 key={i}>
+                  <DataTableCellV2>{row.applicationName}</DataTableCellV2>
+                  <DataTableCellV2>{row.name}</DataTableCellV2>
+                  <DataTableCellV2 >{row.group}</DataTableCellV2>
+                  <DataTableCellV2 >{row.description}</DataTableCellV2>
+                  <DataTableCellV2 align="right">{row.value}</DataTableCellV2>
+                </DataTableRowV2>
+              )}
+            </DataTableBodyV2>
+          </DataTableV2>
+          {tableData.length > 0 ? <Pagination
+            theme={{ background: 'transparent' }}
+            selected={currentPage}
+            onChange={handlePageChange}
+            total={Math.ceil(tableData.length / itemsPerPage)}
+          /> : <></>}
+        </div>
+      </>
+
+    } return <></>;
   }
 
   return (
@@ -79,14 +155,13 @@ const ApplicationProperties = () => {
           <Select
             id="applicationFilterSelect"
             className="fluid"
-            onChange={setApplicationFilter}
-            value={applicationFilter}
+            onChange={onApplicationFilterChange}
           >
-            <SelectOption value=''></SelectOption>
-            {data.map(option => <SelectOption value={option.id}>{option.friendlyName}</SelectOption>)}
+            <SelectOption value=""></SelectOption>
+            {data.map((option) => <SelectOption value={option.id} key={option.id}>{option.friendlyName}</SelectOption>)}
           </Select>
         </div>
-        <div className="col-sm-12 col-md-3 pad-1-sm-down margin-2-t">
+        <div className={`${styles.searchFieldPadTop} col-sm-12 col-md-3 pad-1-sm-down margin-2-t`}>
           <Search
             id="df-search"
             value={searchTerm}
@@ -115,52 +190,9 @@ const ApplicationProperties = () => {
           </ButtonPrimary>
         </div>
       </div>
-      <div className="flex flex-justify-end col-md-12">
-        <Label className="flex flex-align-center pad-1-r">
-          <FormattedMessage id="records.per.page" />
-        </Label>
-        <div className="col-md-1">
-          <Select
-            id="dt-v2-p-select"
-            onChange={handleDropDownChange}
-            value={itemsPerPage}
-          >
-            <SelectOption value="5">5</SelectOption>
-            <SelectOption value="7">7</SelectOption>
-            <SelectOption value="10">10</SelectOption>
-          </Select>
-        </div>
-      </div>
-      <div className="row margin-1">
-        <DataTableV2 small={true} id="tablev2-small-instance">
-          <DataTableHeadV2>
-            <DataTableRowV2>
-              <DataTableHeadCellV2><FormattedMessage id="property.app.name" /></DataTableHeadCellV2>
-              <DataTableHeadCellV2><FormattedMessage id="property.name" /></DataTableHeadCellV2>
-              <DataTableHeadCellV2><FormattedMessage id="group" /></DataTableHeadCellV2>
-              <DataTableHeadCellV2><FormattedMessage id="description" /></DataTableHeadCellV2>
-              <DataTableHeadCellV2 align="right"><FormattedMessage id="value" /></DataTableHeadCellV2>
-            </DataTableRowV2>
-          </DataTableHeadV2>
-          <DataTableBodyV2>
-            {paginatedRows.map(row =>
-              <DataTableRowV2>
-                <DataTableCellV2>{row.application_name}</DataTableCellV2>
-                <DataTableCellV2>{row.name}</DataTableCellV2>
-                <DataTableCellV2 align="right">{row.group}</DataTableCellV2>
-                <DataTableCellV2 align="right">{row.value}</DataTableCellV2>
-                <DataTableCellV2 align="right">{row.description}</DataTableCellV2>
-              </DataTableRowV2>
-            )}
-          </DataTableBodyV2>
-        </DataTableV2>
-        <Pagination
-          theme={{ background: 'transparent' }}
-          selected={currentPage}
-          onChange={handlePageChange}
-          total={Math.ceil(tableData.length / itemsPerPage)}
-        />
-      </div>
+      {
+        getTable()
+      }
     </>
   );
 };

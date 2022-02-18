@@ -1,9 +1,22 @@
 import AppConfig from '../src/appConfig';
 
-describe('appConfig', () => {
-  it('should contain csp', () => {
-    expect(AppConfig.csp).toBeDefined();
-    expect(typeof AppConfig.csp).toBe('string');
-    expect(AppConfig.csp).toMatchSnapshot();
+describe('state config', () => {
+  it('should be valid', () => {
+    const stateConfig = AppConfig.provideStateConfig;
+
+    Object.keys(stateConfig).forEach((configName) => {
+      expect(stateConfig[configName]).toMatchObject({
+        client: {
+          e1: expect.any(String),
+          e2: expect.any(String),
+          e3: expect.any(String),
+        },
+        server: {
+          e1: expect.any(String),
+          e2: expect.any(String),
+          e3: expect.any(String),
+        },
+      });
+    });
   });
 });
