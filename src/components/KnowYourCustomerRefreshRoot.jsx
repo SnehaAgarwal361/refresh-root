@@ -10,7 +10,10 @@ import childRoutes from '../childRoutes';
 import Header from './GlobalHeader/Header';
 
 const KYCRefreshRoot = ({
-  languageData, locale, router, children,
+  languageData,
+  locale,
+  router,
+  children,
 }) => Object.entries(languageData).length > 0 && (
 <IntlProvider locale={locale} messages={languageData}>
   <Helmet

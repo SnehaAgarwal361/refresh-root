@@ -1,5 +1,4 @@
 import React from 'react';
-import { withRouter } from '@americanexpress/one-app-router';
 import {
   OverflowMenuNavigation,
   OverflowMenu,
@@ -18,7 +17,7 @@ const Header = ({ push }) => (
     className="nav nav-large nav-horizontal nav-header dls-bright-blue-bg dls-white"
     role="banner"
   >
-    <div className="nav-brand container pad-l">
+    <div className="nav-brand pad-l">
       <img
         src="https://www.aexp-static.com/cdaas/one/statics/axp-static-assets/2.24.1/package/dist/img/logos/dls-logo-line-white.svg"
         alt="American Express"

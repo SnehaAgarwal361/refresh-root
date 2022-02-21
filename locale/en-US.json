@@ -19,5 +19,9 @@
   "description": "Description",
   "value": "Value",
   "records.per.page": "Records per page",
-  "search.field.placeholder": "search"
+  "search.field.placeholder": "search",
+  "save.button.label": "Save",
+  "close.button.label": "Close",
+  "modal.head": "Update Application Property",
+  "filter.default.option": "Select"
 }
