@@ -15,11 +15,16 @@
     "prepare": "npm run build && npm run test:unit && npm run test:lint -- --fix && npm run test:browser",
     "pretest:a11y": "create-runner-env && one-app-runner-test",
     "pretest:browser": "npm run build && create-runner-env && one-app-runner-test",
-    "test": " npm run test:lint && npm run test:unit && npm run test:browser && npm run test:a11y",
+    "test": "npm run test:lint && npm run test:unit && npm run test:browser && npm run test:a11y",
     "test:a11y": "jest a11y --preset @americanexpress/jest-preset-browser",
     "test:browser": "jest /browser/ --preset @americanexpress/jest-preset-browser --runInBand",
     "test:lint": "eslint --ignore-path .gitignore --ext js,jsx,snap .",
-    "test:unit": "jest --testPathIgnorePatterns /browser/ /a11y/"
+    "test:unit": "cross-env NODE_ENV=production jest --testPathIgnorePatterns /browser/ __tests__/__utils__/ /a11y/",
+    "test:git-history": "commit-messages-to-ref origin/main --pass-with-no-commits",
+    "watch:test": "npm run test:unit -- --watch",
+    "githook:pre-commit": "npm run test",
+    "githook:commit-msg": "commit-msg",
+    "release": "standard-version --skip.tag --release-as"
   },
   "one-amex": {
     "app": {
@@ -46,14 +51,24 @@
   "dependencies": {
     "@americanexpress/content-security-policy": "^2.32.0",
     "@americanexpress/dls-react": "^1.25.3",
+    "@americanexpress/fetchye-amex": "^0.2.1",
     "@americanexpress/one-app-ducks": "^4.3.3",
     "@americanexpress/one-app-module-wrapper": "^3.3.1",
     "@americanexpress/one-app-router": "^1.1.0",
+    "@americanexpress/react-ddl": "^0.1.4",
+    "@commitlint/cli": "^15.0.0",
+    "@commitlint/config-conventional": "^15.0.0",
+    "@emotion/core": "^10.0.28",
+    "@testing-library/jest-dom": "^5.15.1",
+    "@testing-library/react": "^12.1.2",
+    "fetchye": "^1.1.0",
+    "fetchye-one-app": "^1.1.0",
     "holocron": "^1.1.4",
     "prop-types": "^15.7.2",
     "react": "^16.13.1",
     "react-helmet": "^6.1.0",
-    "react-intl": "^5.20.10"
+    "react-intl": "^5.20.10",
+    "standard-version": "^9.3.2"
   },
   "devDependencies": {
     "@americanexpress/jest-a11y": "^3.0.3",
@@ -64,22 +79,33 @@
     "amex-jest-preset-react": "^6.1.0",
     "babel-eslint": "^10.1.0",
     "babel-preset-amex": "^3.5.0",
+    "cross-env": "^7.0.3",
     "enzyme": "^3.11.0",
     "enzyme-to-json": "^3.6.1",
     "eslint": "^7.32.0",
     "eslint-config-amex": "^15.0.0",
     "eslint-plugin-jest": "^24.5.0",
     "eslint-plugin-jest-dom": "^3.9.2",
+    "husky": "^7.0.0",
     "jest": "^26.6.3",
     "jest-image-snapshot": "^4.0.2",
+    "jest-serializer-html": "^7.1.0",
     "one-amex-test-utils": "^6.2.0",
+    "react-dom": "^16.13.1",
     "rimraf": "^3.0.2",
     "typescript": "^4.4.3"
   },
   "jest": {
     "preset": "amex-jest-preset-react",
-    "setupFiles": [
+    "setupFilesAfterEnv": [
       "./test-setup.js"
+    ],
+    "snapshotSerializers": [
+      "jest-serializer-html"
+    ],
+    "testPathIgnorePatterns": [
+      "/node_modules/",
+      "__tests__/__utils__/"
     ]
   }
 }

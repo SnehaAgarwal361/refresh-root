@@ -1,5 +1,4 @@
 import React from 'react';
-import { withRouter } from '@americanexpress/one-app-router';
 import {
   OverflowMenuNavigation,
   OverflowMenu,
@@ -12,13 +11,13 @@ import {
 } from '@americanexpress/dls-react';
 import { FormattedMessage } from 'react-intl';
 
-const Header = ({push}) => (
+const Header = ({ push }) => (
   <header
     id="dls-nav"
     className="nav nav-large nav-horizontal nav-header dls-bright-blue-bg dls-white"
     role="banner"
   >
-    <div className="nav-brand container pad-l">
+    <div className="nav-brand pad-l">
       <img
         src="https://www.aexp-static.com/cdaas/one/statics/axp-static-assets/2.24.1/package/dist/img/logos/dls-logo-line-white.svg"
         alt="American Express"
@@ -50,7 +49,5 @@ const Header = ({push}) => (
     </div>
   </header>
 );
-
-Header.propTypes = {};
 
 export default Header;

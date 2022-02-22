@@ -1,3 +1,11 @@
 {
-  "extends": "amex/test"
+  "extends": "amex/test",
+  "overrides": [
+    {
+      "files": ["childRoutes.spec.jsx", "childRoutes.spec.jsx.snap"],
+      "rules": {
+        "jest/no-large-snapshots": "off"
+      }
+    }
+  ]
 }
