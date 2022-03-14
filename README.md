@@ -1,5 +1,5 @@
 <h1 align="center">
-  <img src="https://one-dev.aexp.com/images/app.svg" width="100" alt="One App logo" /><br /><br />
+  <img src="https://one-dev.aexp.com/images/app.svg" width="100" alt="One App logo" /><br />
   know-your-customer-refresh-root
 </h1>
 

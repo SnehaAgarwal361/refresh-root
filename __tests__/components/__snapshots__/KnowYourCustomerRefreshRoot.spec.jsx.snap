@@ -1,0 +1,39 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`TestableKnowYourCustomerRefreshRoot loadModuleData should call languageData 1`] = `
+[MockFunction] {
+  "calls": Array [
+    Array [
+      "know-your-customer-refresh-root",
+      Object {
+        "fallbackLocale": "en-US",
+      },
+    ],
+  ],
+  "results": Array [
+    Object {
+      "type": "return",
+      "value": Object {
+        "fallbackLocale": "en-US",
+        "message": "lang pack async state for know-your-customer-refresh-root",
+      },
+    },
+  ],
+}
+`;
+
+exports[`TestableKnowYourCustomerRefreshRoot should render as expected module should render correct JSX 1`] = `
+<IntlProviderMock
+  locale="localeMock"
+  messages={
+    Object {
+      "intlKeyMock": "intlValueMock",
+    }
+  }
+>
+  <DLSStyle
+    version="6.18.1"
+  />
+  <Header />
+</IntlProviderMock>
+`;

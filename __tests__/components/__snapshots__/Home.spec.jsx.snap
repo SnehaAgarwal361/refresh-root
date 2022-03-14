@@ -1,0 +1,20 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Display home screen as expected 1`] = `
+<main
+  class="flex flex-column"
+>
+  <div
+    class="kycMainLogo"
+  >
+    <title>
+      testUser
+    </title>
+  </div>
+  <div
+    class="heading-5 dls-bright-blue margin-center"
+  >
+    translated string for id: HomePageBodyHeader
+  </div>
+</main>
+`;

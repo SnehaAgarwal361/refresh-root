@@ -15,20 +15,18 @@
     "prepare": "npm run build && npm run test:unit && npm run test:lint -- --fix && npm run test:browser",
     "pretest:a11y": "create-runner-env && one-app-runner-test",
     "pretest:browser": "npm run build && create-runner-env && one-app-runner-test",
-    "test": "npm run test:lint && npm run test:unit && npm run test:browser && npm run test:a11y",
+    "test": " npm run test:lint && npm run test:unit && npm run test:browser && npm run test:a11y",
     "test:a11y": "jest a11y --preset @americanexpress/jest-preset-browser",
     "test:browser": "jest /browser/ --preset @americanexpress/jest-preset-browser --runInBand",
-    "test:lint": "eslint --ignore-path .gitignore --ext js,jsx,snap .",
-    "test:unit": "cross-env NODE_ENV=production jest --testPathIgnorePatterns /browser/ __tests__/__utils__/ /a11y/",
-    "test:git-history": "commit-messages-to-ref origin/main --pass-with-no-commits",
-    "watch:test": "npm run test:unit -- --watch",
-    "githook:pre-commit": "npm run test",
-    "githook:commit-msg": "commit-msg",
-    "release": "standard-version --skip.tag --release-as"
+    "test:lint": "eslint  -c .eslintrc.json --ignore-path .gitignore --ext js,jsx,snap .",
+    "test:unit": "jest --testPathIgnorePatterns /browser/ /a11y/ /testMocks/"
   },
   "one-amex": {
     "app": {
       "compatibility": "^5.0.0"
+    },
+    "bundler": {
+      "webpackConfigPath": "webpack.config.js"
     },
     "product-contacts": [
       "Anil Kumar Sanathi <anil.k.sanathi@aexp.com>",
@@ -36,12 +34,16 @@
     ],
     "runner": {
       "modules": [
-        "."
+        ".",
+        "../axp-intranet-identity"
       ],
+      "moduleMapUrl": "https://cdaas-dev.aexp.com/cdaas/one-app/map/epaas-kycrefresh-intra-kycrefresh-e1/module-map.json",
       "rootModuleName": "know-your-customer-refresh-root",
       "dockerImage": "dockerproxy.aexp.com/oneamex/one-app-dev:latest",
       "envVars": {
-        "ONE_CONFIG_ENV": "e1"
+        "ONE_CONFIG_ENV": "e1",
+        "AUTHBLUE_BYPASS": "true",
+        "AUTHBLUE_LOCAL_USER": "ideskov"
       }
     },
     "risk": {
@@ -49,6 +51,7 @@
     }
   },
   "dependencies": {
+    "@americanexpress/browser-like-fetch": "^1.0.1",
     "@americanexpress/content-security-policy": "^2.32.0",
     "@americanexpress/dls-react": "^1.25.3",
     "@americanexpress/fetchye-amex": "^0.2.1",
@@ -59,15 +62,22 @@
     "@commitlint/cli": "^15.0.0",
     "@commitlint/config-conventional": "^15.0.0",
     "@emotion/core": "^10.0.28",
+    "@reduxjs/toolkit": "^1.8.0",
     "@testing-library/jest-dom": "^5.15.1",
-    "@testing-library/react": "^12.1.2",
+    "@testing-library/react": "^12.1.3",
+    "@testing-library/react-hooks": "^7.0.2",
+    "@testing-library/user-event": "^13.5.0",
     "fetchye": "^1.1.0",
     "fetchye-one-app": "^1.1.0",
     "holocron": "^1.1.4",
+    "holocron-module-route": "^1.2.1",
+    "immutable": "^4.0.0",
+    "mermaid": "^8.14.0",
     "prop-types": "^15.7.2",
     "react": "^16.13.1",
     "react-helmet": "^6.1.0",
     "react-intl": "^5.20.10",
+    "react-redux": "^7.2.6",
     "standard-version": "^9.3.2"
   },
   "devDependencies": {
@@ -91,17 +101,17 @@
     "jest-image-snapshot": "^4.0.2",
     "jest-serializer-html": "^7.1.0",
     "one-amex-test-utils": "^6.2.0",
-    "react-dom": "^16.13.1",
+    "react-dom": "^17.0.2",
     "rimraf": "^3.0.2",
     "typescript": "^4.4.3"
   },
   "jest": {
     "preset": "amex-jest-preset-react",
-    "setupFilesAfterEnv": [
+    "moduleNameMapper": {
+      "mermaid": "<rootDir>/node_modules/mermaid/dist/mermaid.js"
+    },
+    "setupFiles": [
       "./test-setup.js"
-    ],
-    "snapshotSerializers": [
-      "jest-serializer-html"
     ],
     "testPathIgnorePatterns": [
       "/node_modules/",

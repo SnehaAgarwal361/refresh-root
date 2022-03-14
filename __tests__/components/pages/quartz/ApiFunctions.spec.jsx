@@ -1,0 +1,51 @@
+import { useOneDataFetchye } from '@americanexpress/fetchye-amex';
+import {
+  CreateTrigger,
+  FetchTriggerList,
+  PauseTrigger, ResetTrigger, ResumeTrigger,
+  UpdateTrigger,
+} from '../../../../src/components/pages/quartz/ApiFunctions';
+
+jest.mock('@americanexpress/fetchye-amex');
+
+test('Call Fetch Triggers API  function with expected argument list', () => {
+  const mockApi = useOneDataFetchye.mockImplementation(jest.fn);
+  FetchTriggerList('Test Application');
+  expect(mockApi)
+    .toHaveBeenCalledWith('ReadKnowYourCustomerRefreshJobTriggers.v1', { body: { applicationName: 'Test Application' } });
+});
+
+test('Call Create Trigger API  function with expected argument list', () => {
+  const mockApi = useOneDataFetchye.mockImplementation(jest.fn);
+  CreateTrigger('Test Application', 'Test Trigger');
+  expect(mockApi)
+    .toHaveBeenCalledWith('CreateKnowYourCustomerRefreshJobTrigger.v1', { defer: true, body: { applicationName: 'Test Application', triggerName: 'Test Trigger' } });
+});
+
+test('Call Update Trigger API  function with expected argument list', () => {
+  const mockApi = useOneDataFetchye.mockImplementation(jest.fn);
+  UpdateTrigger('Test Application', 'Test Trigger', { triggerType: 'CRON', interval: '0 0/2 * * * ?' });
+  expect(mockApi)
+    .toHaveBeenCalledWith('UpdateKnowYourCustomerRefreshJobTrigger.v1', { defer: true, body: { applicationName: 'Test Application', triggerName: 'Test Trigger', schedule: { triggerType: 'CRON', interval: '0 0/2 * * * ?' } } });
+});
+
+test('Call Pause Trigger API  function with expected argument list', () => {
+  const mockApi = useOneDataFetchye.mockImplementation(jest.fn);
+  PauseTrigger('Test Application', 'Test Trigger');
+  expect(mockApi)
+    .toHaveBeenCalledWith('UpdateKnowYourCustomerRefreshJobTrigger.v1', { defer: true, body: { applicationName: 'Test Application', triggerName: 'Test Trigger', status: 'PAUSED' } });
+});
+
+test('Call Resume Trigger API  function with expected argument list', () => {
+  const mockApi = useOneDataFetchye.mockImplementation(jest.fn);
+  ResumeTrigger('Test Application', 'Test Trigger');
+  expect(mockApi)
+    .toHaveBeenCalledWith('UpdateKnowYourCustomerRefreshJobTrigger.v1', { defer: true, body: { applicationName: 'Test Application', triggerName: 'Test Trigger', status: 'NORMAL' } });
+});
+
+test('Call Reset Trigger API  function with expected argument list', () => {
+  const mockApi = useOneDataFetchye.mockImplementation(jest.fn);
+  ResetTrigger('Test Application', 'Test Trigger');
+  expect(mockApi)
+    .toHaveBeenCalledWith('UpdateKnowYourCustomerRefreshJobTrigger.v1', { defer: true, body: { applicationName: 'Test Application', triggerName: 'Test Trigger', status: 'RESET' } });
+});

@@ -1,32 +1,50 @@
 import React from 'react';
-import { render } from '@testing-library/react';
-import { TestableKnowYourCustomerRefreshRoot } from '../../src/components/KnowYourCustomerRefreshRoot';
+import { shallow } from 'enzyme';
+import { loadLanguagePack } from '@americanexpress/one-app-ducks';
+import ModuleRoute from 'holocron-module-route';
+import {
+  loadModuleData,
+  TestableKnowYourCustomerRefreshRoot,
+} from '../../src/components/KnowYourCustomerRefreshRoot';
+import childRoutes from '../../src/childRoutes';
+
+require('@testing-library/jest-dom/extend-expect');
 
 jest.mock('@americanexpress/one-app-ducks', () => ({
-  queryLanguagePack: jest.fn((module, { fallbackLocale } = {}) => ({
+  loadLanguagePack: jest.fn((module, { fallbackLocale } = {}) => ({
     message: `lang pack async state for ${module}`,
     fallbackLocale,
   })),
 }));
 
-describe('KnowYourCustomerRefreshRoot', () => {
-  let props = {
-    router: {
-      push: jest.fn(),
-    },
-  };
-  const MockHeader = () => <div>Global Header</div>;
-
-  beforeEach(() => {
-    props = {
-      languageData: { intlKeyMock: 'intlValueMock' },
-      locale: 'localeMock',
-      GlobalHeader: MockHeader,
-    };
+describe('TestableKnowYourCustomerRefreshRoot', () => {
+  describe('should render as expected', () => {
+    it('module should render correct JSX', () => {
+      const renderedModule = shallow(<TestableKnowYourCustomerRefreshRoot languageData={{ intlKeyMock: 'intlValueMock' }} locale="localeMock" />);
+      expect(renderedModule)
+        .toMatchSnapshot();
+    });
   });
 
-  it('should render as expected when loaded', () => {
-    const { container } = render(<TestableKnowYourCustomerRefreshRoot {...props} />);
-    expect(container).toMatchSnapshot();
+  describe('loadModuleData', () => {
+    const fakeStore = {
+      dispatch: jest.fn((x) => x),
+    };
+
+    it('should call languageData', async () => {
+      await loadModuleData({ store: fakeStore });
+      expect(loadLanguagePack)
+        .toMatchSnapshot();
+    });
+  });
+
+  describe('childRoutes', () => {
+    it('should return an array of Routes', () => {
+      expect(childRoutes())
+        .toEqual(expect.any(Array));
+      childRoutes()
+        .forEach((route) => expect(route.type)
+          .toEqual(ModuleRoute));
+    });
   });
 });

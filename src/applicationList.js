@@ -1,4 +1,4 @@
-export const data = [
+export const applicationList = [
   {
     friendlyName: 'Admin',
     description: 'Admin functions (healthcheck, card member manager)',

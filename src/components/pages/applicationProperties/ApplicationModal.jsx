@@ -1,4 +1,6 @@
-import {
+/* eslint-disable react/jsx-no-useless-fragment -- fragment required when hidden */
+import React,
+{
   useState,
   forwardRef,
   useImperativeHandle,
@@ -11,23 +13,24 @@ import {
   ModalFooter,
   Button,
 } from '@americanexpress/dls-react';
+import { useAdsId } from '../../common/UserState';
 
 export const ApplicationModal = forwardRef((props, ref) => {
   const [showModal, setShowModal] = useState(false);
   const [application, setApplication] = useState();
   const [value, setValue] = useState();
   const [index, setIndex] = useState();
-
+  const adsId = useAdsId();
   const toggleModal = () => {
     setShowModal(!showModal);
   };
 
   useImperativeHandle(ref, () => ({
-    openModal: (applicationRow, index) => {
+    openModal: (applicationRow, rowIndex) => {
       toggleModal();
       setValue(applicationRow.value);
       setApplication(applicationRow);
-      setIndex(index);
+      setIndex(rowIndex);
     },
   }));
 
@@ -37,10 +40,10 @@ export const ApplicationModal = forwardRef((props, ref) => {
 
   const saveApplication = (e) => {
     e.preventDefault();
-    const _application = { ...application };
-    _application.value = value;
-    props.saveApplication({ application: _application, index });
-
+    const applicationProp = { ...application };
+    applicationProp.value = value;
+    applicationProp.lastUpdated.userId = adsId;
+    props.saveApplication({ application: applicationProp, index });
     toggleModal();
   };
 
@@ -59,12 +62,12 @@ export const ApplicationModal = forwardRef((props, ref) => {
                 {application?.name}
               </h2>
               <p className="pad-2-b">
-                <textarea value={value} rows="6" className="fluid pad-1" onChange={updateValue} />
+                <textarea data-testid="modalInputArea" value={value} rows="6" className="fluid pad-1" onChange={updateValue} />
               </p>
             </div>
           </ModalBody>
           <ModalFooter>
-            <Button className="margin-1-r" styleType="primary" onClick={saveApplication}>
+            <Button data-testid="modalSaveBtn" className="margin-1-r" styleType="primary" onClick={saveApplication}>
               <FormattedMessage id="save.button.label" />
             </Button>
             <Button styleType="primary" onClick={toggleModal}>
@@ -76,3 +79,8 @@ export const ApplicationModal = forwardRef((props, ref) => {
     </>
   );
 });
+
+/* eslint-enable react/jsx-no-useless-fragment -- fragment required when hidden */
+
+ApplicationModal.displayName = 'ApplicationModal';
+ApplicationModal.propTypes = React.PropsWithChildren;

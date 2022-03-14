@@ -11,7 +11,6 @@
   "logout.head": "Welcome to Logout",
   "applicationFilter.label": "Application",
   "propertyGroupFilter.label": "Property Group",
-  "search.button.label": "Search",
   "reset.button.label": "Reset",
   "property.app.name": "Property App Name",
   "property.name": "Property Name",
