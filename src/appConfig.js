@@ -21,6 +21,16 @@ const authblueLoginBaseUrls = {
 };
 
 /*
+ * This is the URL needed by axp-intranet-identity for redirecting to AuthBlue Logout pages
+ * when a session is not valid
+ */
+const authblueLogoutBaseUrls = {
+  e1: 'https://ssoisvc-dev.aexp.com/ssoi/logoff',
+  e2: 'https://authbluesvcqa-vip.phx.aexp.com/ssoi/logoff',
+  e3: 'https://authbluesvc.aexp.com/ssoi/logoff',
+};
+
+/*
  * This is the URL needed by axp-intranet-identity for redirecting to AuthBlue Tenancy which
  * is responsible for converting the bluetoken cookie into an aat token
  */
@@ -49,6 +59,10 @@ export default {
     authblueLoginBaseUrl: {
       client: authblueLoginBaseUrls,
       server: authblueLoginBaseUrls,
+    },
+    authblueLogoutBaseUrl: {
+      client: authblueLogoutBaseUrls,
+      server: authblueLogoutBaseUrls,
     },
     faasApiUrl: {
       client: faasApiUrls,

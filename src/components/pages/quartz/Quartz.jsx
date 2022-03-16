@@ -268,10 +268,15 @@ function Legend() {
 export function Quartz() {
   const [selectedApp, setSelectedApp] = useState('');
   return (
-    <div id="outer">
-      <TopPanel setApp={setSelectedApp} />
-      { selectedApp !== '' && <TriggerList selectedApp={selectedApp} /> }
-    </div>
+    <>
+      <h2>
+        <div className="text-align-center margin-2-b heading-4">Quartz Scheduler</div>
+      </h2>
+      <div id="outer">
+        <TopPanel setApp={setSelectedApp} />
+        {selectedApp !== '' && <TriggerList selectedApp={selectedApp} />}
+      </div>
+    </>
   );
 }
 

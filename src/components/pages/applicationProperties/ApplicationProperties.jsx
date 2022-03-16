@@ -210,6 +210,9 @@ const ApplicationProperties = () => {
 
   return (
     <>
+      <h2>
+        <div className="text-align-center margin-2-b heading-4">Application Properties</div>
+      </h2>
       <ApplicationModal ref={modalRef} saveApplication={saveApplication} />
       <div className="pad-2-md-up pad-1-sm-down flex shadow-2">
         <div className="col-sm-12 row col-md-3 col-md-offset-3">
