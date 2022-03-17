@@ -59,7 +59,7 @@ const ApplicationProperties = () => {
       },
     });
 
-  useEffect(() => {
+  useEffect(() => { // Changes on clicking save
     if (modalSave && selectedRow) {
       updatePropertyRun.run().then((updateResult) => {
         if (updateResult.data.ok) {
@@ -79,7 +79,7 @@ const ApplicationProperties = () => {
     }
   }, [selectedRow, modalSave, updatePropertyRun, fetchRun]);
 
-  useEffect(() => {
+  useEffect(() => { // Changes on selecting an application
     if (!isLoading && !fetchError && fetchData?.body) {
       setTableData(fetchData.body);
     } else {
@@ -138,6 +138,8 @@ const ApplicationProperties = () => {
 
   const onApplicationFilterChange = (e) => {
     setApplicationFilter(e.target.value);
+    setErrorMessage(undefined);
+    setSuccessMessage(undefined);
   };
 
   const saveApplication = (rowData) => {
