@@ -140,6 +140,7 @@ const ApplicationProperties = () => {
     setApplicationFilter(e.target.value);
     setErrorMessage(undefined);
     setSuccessMessage(undefined);
+    setCurrentPage(1);
   };
 
   const saveApplication = (rowData) => {
