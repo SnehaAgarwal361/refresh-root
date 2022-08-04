@@ -1,3 +1,6 @@
 {
-  "extends": "amex"
+  "extends": "amex",
+  "rules": {
+    "eslint-comments/no-unused-disable": "off"
+  }
 }

@@ -1,80 +1,93 @@
 import React, {
-  useState,
-  useMemo,
-  useRef,
-  useEffect,
+  useEffect, useMemo, useRef, useState,
 } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 import {
+  DataTableBodyV2,
+  DataTableCellV2,
+  DataTableHeadCellV2,
+  DataTableHeadV2,
+  DataTableRowV2,
+  DataTableV2,
   Label,
+  Pagination,
+  Search,
   Select,
   SelectOption,
-  ButtonPrimary,
-  DataTableV2,
-  DataTableHeadV2,
-  DataTableBodyV2,
-  DataTableRowV2,
-  DataTableHeadCellV2,
-  DataTableCellV2,
-  Search,
-  Pagination,
 } from '@americanexpress/dls-react';
 import { useOneDataFetchye } from '@americanexpress/fetchye-amex';
 import { ApplicationModal } from './ApplicationModal';
-import styles from './styles.scss';
-import { data } from '../../mocks/applicationFilters';
+import styles from '../../styles.scss';
+import { applicationList } from '../../../applicationList';
+import { ErrorMessage, SuccessMessage } from '../../common/PageMessages';
 
 const ApplicationProperties = () => {
   const { formatMessage } = useIntl();
   const [applicationFilter, setApplicationFilter] = useState('');
-  const [itemsPerPage, setItemsPerPage] = useState(5);
+  const [itemsPerPage, setItemsPerPage] = useState(10);
   const [currentPage, setCurrentPage] = useState(1);
   const [tableData, setTableData] = useState(null);
   const [searchTerm, setSearchTerm] = useState('');
-  const [openApplication, setOpenApplication] = useState();
+  const [selectedRow, setSelectedRow] = useState();
   const [modalSave, setModalSave] = useState(false);
-  const [isUpdateSuccess, setUpdateSuccess] = useState(false);
+  const [errorMessage, setErrorMessage] = useState(undefined);
+  const [successMessage, setSuccessMessage] = useState(undefined);
 
-  useEffect(() => {
-    if (modalSave && openApplication) {
-      runSaveApplication.run().then((res) => setUpdateSuccess(res.data.ok)
-      );
-      setModalSave(false);
-    }
-
-    if (isUpdateSuccess && openApplication) {
-      const data = openApplication;
-      const _tableData = tableData;
-      _tableData[data.index].value = data.application.value;
-      _tableData[data.index].version += 1;
-      setTableData(_tableData);
-      setOpenApplication(null);
-      setUpdateSuccess(false);
-    }
-  }, [openApplication, modalSave, isUpdateSuccess]);
-
-  const modalRef = useRef();
-
-  const { isLoading, run } = useOneDataFetchye(
+  const {
+    isLoading,
+    data: fetchData,
+    error: fetchError,
+    run: fetchRun,
+  } = useOneDataFetchye(
     'ReadKnowYourCustomerRefreshApplicationProperties.v1',
     {
-      defer: true,
+      defer: applicationFilter?.trim().length <= 1,
       body: {
         applicationName: applicationFilter,
       },
     });
 
-  const runSaveApplication = useOneDataFetchye(
+  const updatePropertyRun = useOneDataFetchye(
     'UpdateKnowYourCustomerRefreshApplicationProperty.v1',
     {
       defer: true,
       body: {
         applicationName: applicationFilter,
         property: {
-          ...openApplication?.application,
+          ...selectedRow?.application,
         },
       },
     });
+
+  useEffect(() => { // Changes on clicking save
+    if (modalSave && selectedRow) {
+      updatePropertyRun.run().then((updateResult) => {
+        if (updateResult.data.ok) {
+          setSuccessMessage('Updated Successfully');
+          fetchRun().then((fetchResult) => {
+            if (!fetchResult.data.ok) {
+              setErrorMessage(fetchResult?.data.body.error);
+            }
+          });
+          setSelectedRow(null);
+        } else {
+          setErrorMessage(updateResult.data.body.error);
+        }
+      }
+      );
+      setModalSave(false);
+    }
+  }, [selectedRow, modalSave, updatePropertyRun, fetchRun]);
+
+  useEffect(() => { // Changes on selecting an application
+    if (!isLoading && !fetchError && fetchData?.body) {
+      setTableData(fetchData.body);
+    } else {
+      setTableData(null);
+    }
+  }, [fetchData, fetchError, isLoading]);
+
+  const modalRef = useRef();
 
   const handleDropDownChange = (event) => {
     setItemsPerPage(Number(event.target.value));
@@ -83,14 +96,6 @@ const ApplicationProperties = () => {
 
   const handlePageChange = (page) => {
     setCurrentPage(page);
-  };
-
-  const searchClick = (event) => {
-    event.preventDefault();
-    run().then((x) => {
-      if (!x.error && x.data) setTableData(x.data.body);
-      else setTableData([]);
-    });
   };
 
   const paginatedRows = useMemo(() => {
@@ -108,29 +113,38 @@ const ApplicationProperties = () => {
   }, [tableData, currentPage, itemsPerPage]);
 
   const searchTermHandler = (e) => {
-    if (!tableData) return markup;
-
-    const searchTerm = e.target.value;
-    const filteredData = tableData.filter((row) => row.applicationName.toLowerCase().includes(searchTerm.toLowerCase())
-      || row.name.toLowerCase().includes(searchTerm.toLowerCase())
-      || row.group.toLowerCase().includes(searchTerm.toLowerCase())
-      || row.value.toLowerCase().includes(searchTerm.toLowerCase())
-      || row.description.toLowerCase().includes(searchTerm.toLowerCase()));
-    setSearchTerm(searchTerm);
-    setTableData(filteredData);
+    setCurrentPage(1);
+    if (tableData) {
+      const inputValue = e.target.value;
+      if (inputValue?.trim() === '') {
+        setTableData(fetchData.body);
+      } else {
+        const filteredData = tableData.filter(
+          (row) => row.applicationName?.toLowerCase()
+            .includes(inputValue.toLowerCase())
+            || row.name?.toLowerCase()
+              .includes(inputValue.toLowerCase())
+            || row.group?.toLowerCase()
+              .includes(inputValue.toLowerCase())
+            || row.value?.toLowerCase()
+              .includes(inputValue.toLowerCase())
+            || row.description?.toLowerCase()
+              .includes(inputValue.toLowerCase()));
+        setTableData(filteredData);
+      }
+      setSearchTerm(inputValue);
+    }
   };
 
   const onApplicationFilterChange = (e) => {
-    const selectedApplication = data.find((a) => a.id == e.target.value);
-    if (selectedApplication) setApplicationFilter(selectedApplication.friendlyName);
+    setApplicationFilter(e.target.value);
+    setErrorMessage(undefined);
+    setSuccessMessage(undefined);
+    setCurrentPage(1);
   };
 
-  const resetClick = () => {
-    setApplicationFilter('');
-  };
-
-  const saveApplication = (data) => {
-    setOpenApplication(data);
+  const saveApplication = (rowData) => {
+    setSelectedRow(rowData);
     setModalSave(true);
   };
 
@@ -145,12 +159,13 @@ const ApplicationProperties = () => {
             <div className="col-md-1">
               <Select
                 id="dt-v2-p-select"
+                data-testid="itemsPageDropDown"
                 onChange={handleDropDownChange}
                 value={itemsPerPage}
               >
-                <SelectOption value="5">5</SelectOption>
-                <SelectOption value="7">7</SelectOption>
                 <SelectOption value="10">10</SelectOption>
+                <SelectOption value="20">20</SelectOption>
+                <SelectOption value="30">30</SelectOption>
               </Select>
             </div>
           </div>
@@ -162,53 +177,62 @@ const ApplicationProperties = () => {
                   <DataTableHeadCellV2><FormattedMessage id="property.name" /></DataTableHeadCellV2>
                   <DataTableHeadCellV2><FormattedMessage id="group" /></DataTableHeadCellV2>
                   <DataTableHeadCellV2><FormattedMessage id="description" /></DataTableHeadCellV2>
-                  <DataTableHeadCellV2 align="right"><FormattedMessage id="value" /></DataTableHeadCellV2>
+                  <DataTableHeadCellV2><FormattedMessage id="value" /></DataTableHeadCellV2>
                 </DataTableRowV2>
               </DataTableHeadV2>
               <DataTableBodyV2>
-                {paginatedRows.map((row, i, a) => (
-                  <DataTableRowV2 key={i} onClick={(e) => modalRef.current.openModal(row, i)}>
+                {paginatedRows.map((row, i) => (
+                  <DataTableRowV2
+                    key={`${row.name}-${row.applicationName}`}
+                    onClick={() => modalRef.current.openModal(row, i)}
+                  >
                     <DataTableCellV2>{row.applicationName}</DataTableCellV2>
                     <DataTableCellV2>{row.name}</DataTableCellV2>
                     <DataTableCellV2>{row.group}</DataTableCellV2>
                     <DataTableCellV2>{row.description}</DataTableCellV2>
-                    <DataTableCellV2 align="right">{row.value}</DataTableCellV2>
+                    <DataTableCellV2>{row.value}</DataTableCellV2>
                   </DataTableRowV2>
                 )
                 )}
               </DataTableBodyV2>
             </DataTableV2>
-            {tableData.length > 0 ? (
+            {tableData.length > 0 && (
               <Pagination
+                data-testid="selectPageNumber"
                 theme={{ background: 'transparent' }}
                 selected={currentPage}
                 onChange={handlePageChange}
                 total={Math.ceil(tableData.length / itemsPerPage)}
               />
-            ) : <></>}
+            )}
           </div>
         </>
       );
-    } return <></>;
+    } return <div />;
   };
 
   return (
     <>
+      <h2>
+        <div className="text-align-center margin-2-b heading-4">Application Properties</div>
+      </h2>
       <ApplicationModal ref={modalRef} saveApplication={saveApplication} />
       <div className="pad-2-md-up pad-1-sm-down flex shadow-2">
-        <div className="col-sm-12 col-md-3">
+        <div className="col-sm-12 row col-md-3 col-md-offset-3">
           <Label htmlFor="accountFilterSelect">
             <FormattedMessage id="applicationFilter.label" />
           </Label>
           <Select
             id="applicationFilterSelect"
             className="fluid"
+            value={applicationFilter}
+            data-testid="applicationFilterSelect"
             onChange={onApplicationFilterChange}
           >
-            <SelectOption value={formatMessage({ id: 'filter.default.option' })}>
+            <SelectOption value="">
               {formatMessage({ id: 'filter.default.option' })}
             </SelectOption>
-            {data.map((option) => (
+            {applicationList.map((option) => (
               <SelectOption value={option.id} key={option.id}>
                 {option.friendlyName}
               </SelectOption>
@@ -218,32 +242,15 @@ const ApplicationProperties = () => {
         <div className={`${styles.searchFieldPadTop} col-sm-12 col-md-3 pad-1-sm-down margin-2-t`}>
           <Search
             id="df-search"
+            data-testid="searchTerm"
             value={searchTerm}
             onChange={searchTermHandler}
             placeholder={formatMessage({ id: 'search.field.placeholder' })}
           />
         </div>
-        <div className="col-lg-2 col-md-3 margin-1-t pad-1-sm-down">
-          <ButtonPrimary
-            type="submit"
-            id="searchBtn"
-            className="fluid margin-t"
-            onClick={searchClick}
-          >
-            <FormattedMessage id="search.button.label" />
-          </ButtonPrimary>
-        </div>
-        <div className="col-lg-2 col-md-3 margin-1-t pad-1-sm-down">
-          <ButtonPrimary
-            type="submit"
-            id="resetBtn"
-            className="fluid margin-t"
-            onClick={resetClick}
-          >
-            <FormattedMessage id="reset.button.label" />
-          </ButtonPrimary>
-        </div>
       </div>
+      <SuccessMessage message={successMessage} setSuccess={setSuccessMessage} />
+      <ErrorMessage message={errorMessage} setError={setErrorMessage} />
       {getTable()}
     </>
   );

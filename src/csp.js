@@ -1,3 +1,4 @@
+/* istanbul ignore file */
 import buildCsp from '@americanexpress/content-security-policy';
 
 // Read about csp:

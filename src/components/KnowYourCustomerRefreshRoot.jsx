@@ -1,55 +1,43 @@
-import React from 'react';
-import { compose } from 'redux';
+import React, { Fragment } from 'react';
 import oneAppModuleWrapper from '@americanexpress/one-app-module-wrapper';
 import { IntlProvider } from 'react-intl';
 import { loadLanguagePack } from '@americanexpress/one-app-ducks';
 import PropTypes from 'prop-types';
-import { Helmet } from 'react-helmet';
-import { withRouter } from '@americanexpress/one-app-router';
 import childRoutes from '../childRoutes';
-import Header from './GlobalHeader/Header';
+import { DLSStyle } from './common/DLSStyle';
+import Header from './common/Header';
 
-const KYCRefreshRoot = ({
-  languageData,
-  locale,
-  router,
-  children,
-}) => Object.entries(languageData).length > 0 && (
-<IntlProvider locale={locale} messages={languageData}>
-  <Helmet
-    link={[
-      {
-        rel: 'stylesheet',
-        href: 'https://www.aexp-static.com/cdaas/one/statics/axp-dls/6.18.1/package/dist/6.18.1/styles/dls.min.css',
-      },
-    ]}
-  />
-  <Header push={router.push} />
-  {children}
-</IntlProvider>
+const KnowYourCustomerRefreshRoot = ({ languageData, locale, children }) => (
+  <IntlProvider locale={locale} messages={languageData}>
+    <DLSStyle version="6.18.1" />
+    <Header />
+    {/* eslint-disable-next-line react/jsx-no-useless-fragment -- Fragment gets popuated later */}
+    <Fragment>{children}</Fragment>
+  </IntlProvider>
 );
 
-export const TestableKnowYourCustomerRefreshRoot = KYCRefreshRoot;
+export const TestableKnowYourCustomerRefreshRoot = KnowYourCustomerRefreshRoot;
 
-KYCRefreshRoot.propTypes = {
-  languageData: PropTypes.shape({}).isRequired,
+KnowYourCustomerRefreshRoot.propTypes = {
+  children: PropTypes.node,
+  languageData: PropTypes.shape({}).isRequired, // no need to restate all the keys in the lang pack
   locale: PropTypes.string.isRequired,
 };
 
-KYCRefreshRoot.childRoutes = childRoutes;
+KnowYourCustomerRefreshRoot.childRoutes = childRoutes;
+
+/* istanbul ignore next */
 
 if (!global.BROWSER) {
-  KYCRefreshRoot.appConfig = require('../appConfig').default;
+  // eslint-disable-next-line global-require -- require needs to be inside browser check
+  KnowYourCustomerRefreshRoot.appConfig = require('../appConfig').default;
 }
 
 export const loadModuleData = ({ store: { dispatch } }) => dispatch(loadLanguagePack('know-your-customer-refresh-root', { fallbackLocale: 'en-US' }));
 
-KYCRefreshRoot.holocron = {
+KnowYourCustomerRefreshRoot.holocron = {
   name: 'know-your-customer-refresh-root',
   loadModuleData,
 };
 
-export default compose(
-  oneAppModuleWrapper('know-your-customer-refresh-root'),
-  withRouter
-)(KYCRefreshRoot);
+export default oneAppModuleWrapper('know-your-customer-refresh-root')(KnowYourCustomerRefreshRoot);

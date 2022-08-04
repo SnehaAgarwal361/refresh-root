@@ -10,6 +10,7 @@ build
 .build-cache
 .webpack-stats*
 bundle.integrity.manifest.json
+.package-lock.json
 
 # test
 test-results
