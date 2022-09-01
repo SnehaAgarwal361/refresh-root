@@ -39,7 +39,7 @@
       ],
       "moduleMapUrl": "https://cdaas-dev.aexp.com/cdaas/one-app/map/epaas-kycrefresh-intra-kycrefresh-e1/module-map.json",
       "rootModuleName": "know-your-customer-refresh-root",
-      "dockerImage": "dockerproxy.aexp.com/oneamex/one-app-dev:^5.0.0",
+      "dockerImage": "dockerproxy.aexp.com/oneamex/one-app-dev:5",
       "envVars": {
         "ONE_CONFIG_ENV": "e1",
         "AUTHBLUE_BYPASS": "true",
