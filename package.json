@@ -26,7 +26,8 @@
       "compatibility": "^5.0.0"
     },
     "bundler": {
-      "webpackConfigPath": "webpack.config.js"
+      "webpackConfigPath": "webpack.config.js",
+      "performanceBudget": 500e3
     },
     "product-contacts": [
       "Anil Kumar Sanathi <anil.k.sanathi@aexp.com>",
