@@ -15,7 +15,7 @@
     "prepare": "npm run build && npm run test:unit && npm run test:lint -- --fix && npm run test:browser",
     "pretest:a11y": "create-runner-env && one-app-runner-test",
     "pretest:browser": "npm run build && create-runner-env && one-app-runner-test",
-    "test": " npm run test:lint && npm run test:unit && npm run test:browser && npm run test:a11y",
+    "test": " npm run test:lint && npm run test:unit && npm run test:browser",
     "test:a11y": "jest a11y --preset @americanexpress/jest-preset-browser",
     "test:browser": "jest /browser/ --preset @americanexpress/jest-preset-browser --runInBand",
     "test:lint": "eslint  -c .eslintrc.json --ignore-path .gitignore --ext js,jsx,snap .",
