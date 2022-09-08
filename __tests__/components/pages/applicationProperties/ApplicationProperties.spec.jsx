@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-  act, fireEvent, render, screen, waitFor,
+  render, screen, waitFor,
 } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import { useOneDataFetchye } from '@americanexpress/fetchye-amex';
@@ -44,27 +44,25 @@ describe('Application properties', () => {
     render(<ApplicationProperties />);
     expect(screen.getByTestId('applicationFilterSelect'))
       .toBeInTheDocument();
-    expect(screen.getByTestId('searchTerm'))
+    return expect(screen.getByTestId('searchTerm'))
       .toBeInTheDocument();
   });
 
   test('Handle Pagination', () => {
     useOneDataFetchye.mockImplementation(mockApiImplementation(createApiResponseJson(20)));
     render(<ApplicationProperties />);
-    act(() => userEvent.selectOptions(screen.getByTestId('applicationFilterSelect'), 'Test Application'));
+    userEvent.selectOptions(screen.getByTestId('applicationFilterSelect'), 'Test Application');
     expect(screen.getByText('Test Application').selected)
       .toBeTruthy();
-    waitFor(() => {
-      expect(screen.getByTestId('itemsPageDropDown'))
-        .toBeInTheDocument();
-      userEvent.selectOptions(screen.getByTestId('itemsPageDropDown'), '10');
-      fireEvent.click(screen.getByRole('button', { name: /Next/ }));
-      expect(screen.getByText('Test property19'))
-        .toBeInTheDocument();
-    });
+    expect(screen.getByTestId('itemsPageDropDown'))
+      .toBeInTheDocument();
+    userEvent.selectOptions(screen.getByTestId('itemsPageDropDown'), '10');
+    userEvent.click(screen.getByRole('button', { name: /Next/ }));
+    return expect(screen.getByText('Test property19'))
+      .toBeInTheDocument();
   });
 
-  test('Handle no response from API', async () => {
+  test('Handle no response from API', () => {
     const fetchMock = useOneDataFetchye.mockImplementation(() => ({
       isLoading: false,
       run: jest.fn()
@@ -76,51 +74,42 @@ describe('Application properties', () => {
         })),
     }));
     render(<ApplicationProperties />);
-    act(() => userEvent.selectOptions(screen.getByTestId('applicationFilterSelect'), 'Test Application')
-    );
+    userEvent.selectOptions(screen.getByTestId('applicationFilterSelect'), 'Test Application');
     expect(screen.getByText('Test Application').selected)
       .toBeTruthy();
-
-    await waitFor(() => expect(fetchMock)
+    expect(fetchMock)
       .toHaveBeenCalledWith('ReadKnowYourCustomerRefreshApplicationProperties.v1', {
         body: { applicationName: 'TEST' },
         defer: false,
-      }));
-    expect(screen.queryByText('Test property'))
+      });
+    return expect(screen.queryByText('Test property'))
       .not
       .toBeInTheDocument(); // No Table present
   });
 
-  test('Handle Search within property list', async () => {
+  test('Handle Search within property list', () => {
     const fetchMock = useOneDataFetchye
       .mockImplementation(mockApiImplementation(createApiResponseJson(5)));
     render(<ApplicationProperties />);
-    await act(async () => {
-      userEvent.selectOptions(screen.getByTestId('applicationFilterSelect'), 'Test Application');
-    });
-    await waitFor(() => expect(fetchMock)
+    userEvent.selectOptions(screen.getByTestId('applicationFilterSelect'), 'Test Application');
+    expect(fetchMock)
       .toHaveBeenCalledWith('ReadKnowYourCustomerRefreshApplicationProperties.v1', {
         body: { applicationName: 'TEST' },
         defer: false,
-      }));
-    await act(async () => {
-      userEvent.type(await screen.findByTestId('searchTerm'), '4'); // Search 4th property
-    });
-    expect(screen.queryByText('Test property4'))
-      .toBeInTheDocument();
-    await act(async () => {
-      userEvent.clear(await screen.findByTestId('searchTerm')); // Clear the search
-    });
-    await waitFor(() => expect(screen.queryByText('Test property3'))
-      .toBeInTheDocument()); // All properties are back in table
+      });
+    return screen.findByTestId('searchTerm')
+      .then((el) => userEvent.type(el, '4')) // Search 4th property
+      .then(expect(screen.queryByText('Test property4'))
+        .toBeInTheDocument())
+      .then(() => screen.findByTestId('searchTerm'))
+      .then((el) => userEvent.clear(el)) // Clear the search
+      .then(expect(screen.queryByText('Test property3')).toBeInTheDocument()); // All properties are back in table
   });
 
   test('Filter application before search', () => {
     useOneDataFetchye.mockImplementation(mockApiImplementation(null));
     render(<ApplicationProperties />);
-    act(() => {
-      userEvent.type(screen.getByTestId('searchTerm'), 'Test property');
-    });
+    userEvent.type(screen.getByTestId('searchTerm'), 'Test property');
     expect(screen.queryByText('Test property'))
       .not
       .toBeInTheDocument(); // No table exits
@@ -130,13 +119,11 @@ describe('Application properties', () => {
     useOneDataFetchye.mockImplementation(mockApiImplementation(apiTableData));
     render(<ApplicationProperties />);
     userEvent.selectOptions(screen.getByTestId('applicationFilterSelect'), 'Test Application');
-    waitFor(() => {
-      fireEvent.click(screen.getByText('API_CONTROL'));
-      userEvent.clear(screen.getByTestId('modalInputArea'));
-      userEvent.type(screen.getByTestId('modalInputArea'), 'FALSE');
-      fireEvent.click(screen.getByTestId('modalSaveBtn'));
-      waitFor(() => expect(screen.getByText('Updated Successfully')));
-    });
+    userEvent.click(screen.getByText('API_CONTROL'));
+    userEvent.clear(screen.getByTestId('modalInputArea'));
+    userEvent.type(screen.getByTestId('modalInputArea'), 'FALSE');
+    userEvent.click(screen.getByTestId('modalSaveBtn'));
+    return waitFor(() => expect(screen.getByText('Updated Successfully')));
   });
 
   test('Update application property fails', () => {
@@ -145,15 +132,13 @@ describe('Application properties', () => {
     userEvent.selectOptions(screen.getByTestId('applicationFilterSelect'), 'Test Application');
     expect(screen.getByText('Test Application').selected)
       .toBeTruthy();
-    waitFor(() => {
-      expect(screen.getByText('TRUE'))
-        .toBeInTheDocument();
-    });
-    fireEvent.click(screen.getByText('TRUE'));
+    expect(screen.getByText('TRUE'))
+      .toBeInTheDocument();
+    userEvent.click(screen.getByText('TRUE'));
     userEvent.clear(screen.getByTestId('modalInputArea'));
     userEvent.type(screen.getByTestId('modalInputArea'), 'FALSE');
-    fireEvent.click(screen.getByTestId('modalSaveBtn'));
-    waitFor(() => expect(screen.getByText('Server Error')));
+    userEvent.click(screen.getByTestId('modalSaveBtn'));
+    return waitFor(() => expect(screen.getByText('Server Error')));
   });
 
   test('Update succeeds but refresh fails', () => {
@@ -162,19 +147,12 @@ describe('Application properties', () => {
     userEvent.selectOptions(screen.getByTestId('applicationFilterSelect'), 'Test Application');
     expect(screen.getByText('Test Application').selected)
       .toBeTruthy();
-    waitFor(() => {
-      expect(screen.getByText('TRUE'))
-        .toBeInTheDocument();
-    });
-    act(() => {
-      fireEvent.click(screen.getByText('TRUE'));
-    }
-    );
+    expect(screen.getByText('TRUE'))
+      .toBeInTheDocument();
+    userEvent.click(screen.getByText('TRUE'));
     userEvent.clear(screen.getByTestId('modalInputArea'));
     userEvent.type(screen.getByTestId('modalInputArea'), 'FALSE');
-    act(() => {
-      fireEvent.click(screen.getByTestId('modalSaveBtn'));
-    });
-    waitFor(() => expect(screen.getByText('Server Error')));
+    userEvent.click(screen.getByTestId('modalSaveBtn'));
+    return waitFor(() => expect(screen.getByText('Server Error')));
   });
 });
