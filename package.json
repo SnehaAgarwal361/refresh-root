@@ -83,11 +83,11 @@
   },
   "devDependencies": {
     "@americanexpress/jest-a11y": "^3.0.3",
-    "@americanexpress/jest-preset-browser": "^4.2.1",
-    "@americanexpress/one-app-bundler": "^6.14.2",
+    "@americanexpress/jest-preset-browser": "^4.2.0",
+    "@americanexpress/one-app-bundler": "^6.12.0",
     "@americanexpress/one-app-runner": "^6.12.0",
     "@babel/polyfill": "^7.10.4",
-    "amex-jest-preset-react": "^6.1.2",
+    "amex-jest-preset-react": "^6.1.0",
     "babel-eslint": "^10.1.0",
     "babel-preset-amex": "^3.5.0",
     "cross-env": "^7.0.3",
@@ -118,9 +118,5 @@
       "/node_modules/",
       "__tests__/__utils__/"
     ]
-  },
-  "engines": {
-    "node": "=16.x.x",
-    "npm": "=8.x.x"
   }
 }
