@@ -1,7 +1,7 @@
 const { toBeAccessible } = require('@americanexpress/jest-a11y');
 
 // timeout increased to pull the lighthouse docker and run the a11y audit
-jest.setTimeout(10 * 60 * 1000);
+jest.setTimeout(20 * 60 * 1000);
 
 // `testHost` and `port` are provided to Jest
 // as globals by jest-environment-selenium

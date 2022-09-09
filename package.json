@@ -15,7 +15,7 @@
     "prepare": "npm run build && npm run test:unit && npm run test:lint -- --fix && npm run test:browser",
     "pretest:a11y": "create-runner-env && one-app-runner-test",
     "pretest:browser": "npm run build && create-runner-env && one-app-runner-test",
-    "test": " npm run test:lint && npm run test:unit && npm run test:browser && npm run test:a11y",
+    "test": " npm run test:lint && npm run test:unit && npm run test:browser",
     "test:a11y": "jest a11y --preset @americanexpress/jest-preset-browser",
     "test:browser": "jest /browser/ --preset @americanexpress/jest-preset-browser --runInBand",
     "test:lint": "eslint  -c .eslintrc.json --ignore-path .gitignore --ext js,jsx,snap .",
@@ -38,7 +38,7 @@
         ".",
         "../axp-intranet-identity"
       ],
-      "moduleMapUrl": "https://cdaas-dev.aexp.com/cdaas/one-app/map/epaas-kycrefresh-intra-kycrefresh-e1/module-map.json",
+      "moduleMapUrl": "https://cdaas-dev.aexp.com/cdaas/one-app/map/epaas-kyc-refresh-intra-kyc-refresh-e1/module-map.json",
       "rootModuleName": "know-your-customer-refresh-root",
       "dockerImage": "dockerproxy.aexp.com/oneamex/one-app-dev:5",
       "envVars": {
@@ -84,7 +84,7 @@
   "devDependencies": {
     "@americanexpress/jest-a11y": "^3.0.3",
     "@americanexpress/jest-preset-browser": "^4.2.1",
-    "@americanexpress/one-app-bundler": "^6.14.2",
+    "@americanexpress/one-app-bundler": "^6.12.0",
     "@americanexpress/one-app-runner": "^6.12.0",
     "@babel/polyfill": "^7.10.4",
     "amex-jest-preset-react": "^6.1.2",
@@ -118,9 +118,5 @@
       "/node_modules/",
       "__tests__/__utils__/"
     ]
-  },
-  "engines": {
-    "node": "=16.x.x",
-    "npm": "=8.x.x"
   }
 }

@@ -1,5 +1,11 @@
 {
   "extends": "amex",
+  "globals": {
+    "testHost": false,
+    "seleniumServerPort": false,
+    "port": false,
+    "devProxyServerPort": false
+  },
   "rules": {
     "eslint-comments/no-unused-disable": "off"
   }
