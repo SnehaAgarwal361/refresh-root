@@ -96,8 +96,8 @@ export const applicationList = [
   },
   {
     friendlyName: 'Customer Inbound',
-    description: 'Customer Inbound ensures refresh is successful for our Customer Accounts',
-    isEngineImplementation: true,
+    description: 'Provides Refresh search access to Inbound Channels',
+    isEngineImplementation: false,
     id: 'CIN',
   },
 ];
