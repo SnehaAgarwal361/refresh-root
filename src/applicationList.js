@@ -96,7 +96,7 @@ export const applicationList = [
   },
   {
     friendlyName: 'Customer Inbound',
-    description: 'Provides Refresh search access to Inbound Channels',
+    description: 'Manage online customers who are eligible for refresh using any Inbound channels',
     isEngineImplementation: false,
     id: 'CIN',
   },
