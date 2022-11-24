@@ -94,4 +94,10 @@ export const applicationList = [
     isEngineImplementation: true,
     id: 'WCU',
   },
+  {
+    friendlyName: 'Customer Inbound',
+    description: 'Manage online customers who are eligible for refresh using any Inbound channels',
+    isEngineImplementation: false,
+    id: 'CIN',
+  },
 ];
