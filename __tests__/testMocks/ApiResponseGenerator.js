@@ -8,9 +8,9 @@ export function createApiResponseJson(requiredCount = 10) {
     property.value = i.toString();
     property.description = `Test property ${i} description`;
     property.version = 1;
-    property.lastUpdated = {
+    property.last_updated = {
       source: 'SUPPORT-UI',
-      userId: 'tester',
+      user_id: 'tester',
     };
     jsonObj.push(property);
   }

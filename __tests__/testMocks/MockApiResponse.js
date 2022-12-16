@@ -102,9 +102,9 @@ export const apiTableData = [
     value: 'TRUE',
     description: 'Switch enabling/disabling Get Demographics API',
     version: 78,
-    lastUpdated: {
+    last_updated: {
       source: 'SUPPORT-UI',
-      userId: 'tester',
+      user_id: 'tester',
     },
   }];
 export const expectedUpdatePayLoad = {
@@ -118,9 +118,9 @@ export const expectedUpdatePayLoad = {
       value: 'FALSE',
       description: 'Switch enabling/disabling Get Demographics API',
       version: 78,
-      lastUpdated: {
+      last_updated: {
         source: 'SUPPORT-UI',
-        userId: 'tester',
+        user_id: 'tester',
       },
     },
   },
