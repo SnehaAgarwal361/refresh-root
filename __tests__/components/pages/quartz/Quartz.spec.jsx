@@ -48,7 +48,7 @@ describe('Quartz Scheduler', () => {
             body: [{
               name: 'Trigger Application',
               schedule: {
-                triggerType: 'CRON',
+                trigger_type: 'CRON',
                 interval: '0 */5 * * * ?',
               },
               state: 'NORMAL',
@@ -221,7 +221,7 @@ describe('Quartz Scheduler', () => {
     }));
     render(
       <FetchContext.Provider value={fetchContext}>
-        <PauseButton selectedApp="Test Application" triggerName="Test Trigger" />
+        <PauseButton selectedApp="Test Application" trigger_name="Test Trigger" />
       </FetchContext.Provider>
     );
     const button = screen.getByRole('button');
@@ -251,7 +251,7 @@ describe('Quartz Scheduler', () => {
     );
     render(
       <FetchContext.Provider value={fetchContext}>
-        <PauseButton selectedApp="Test Application" triggerName="Test trigger" />
+        <PauseButton selectedApp="Test Application" trigger_name="Test trigger" />
       </FetchContext.Provider>
     );
     const button = screen.getByRole('button');
@@ -279,7 +279,7 @@ describe('Quartz Scheduler', () => {
     );
     render(
       <FetchContext.Provider value={fetchContext}>
-        <PauseButton selectedApp="Test Application" triggerName="Test trigger" />
+        <PauseButton selectedApp="Test Application" trigger_name="Test trigger" />
       </FetchContext.Provider>
     );
     const button = screen.getByRole('button');
@@ -304,7 +304,7 @@ describe('Quartz Scheduler', () => {
     ));
     render(
       <FetchContext.Provider value={fetchContext}>
-        <ResumeButton selectedApp="Test Application" triggerName="Test Trigger" />
+        <ResumeButton selectedApp="Test Application" trigger_name="Test Trigger" />
       </FetchContext.Provider>
     );
     const button = screen.getByRole('button');
@@ -332,7 +332,7 @@ describe('Quartz Scheduler', () => {
     }));
     render(
       <FetchContext.Provider value={fetchContext}>
-        <ResumeButton selectedApp="Test Application" triggerName="Test trigger" />
+        <ResumeButton selectedApp="Test Application" trigger_name="Test trigger" />
       </FetchContext.Provider>
     );
     const button = screen.getByRole('button');
@@ -358,7 +358,7 @@ describe('Quartz Scheduler', () => {
     }));
     render(
       <FetchContext.Provider value={fetchContext}>
-        <ResumeButton selectedApp="Test Application" triggerName="Test trigger" />
+        <ResumeButton selectedApp="Test Application" trigger_name="Test trigger" />
       </FetchContext.Provider>
     );
     const button = screen.getByRole('button');
@@ -381,7 +381,7 @@ describe('Quartz Scheduler', () => {
     }));
     render(
       <FetchContext.Provider value={fetchContext}>
-        <ResetButton selectedApp="Test Application" triggerName="Test Trigger" />
+        <ResetButton selectedApp="Test Application" trigger_name="Test Trigger" />
       </FetchContext.Provider>
     );
     const button = screen.getByRole('button');
@@ -412,7 +412,7 @@ describe('Quartz Scheduler', () => {
     ));
     render(
       <FetchContext.Provider value={fetchContext}>
-        <ResetButton selectedApp="Test Application" triggerName="Test Trigger" />
+        <ResetButton selectedApp="Test Application" trigger_name="Test Trigger" />
       </FetchContext.Provider>
     );
     const button = screen.getByRole('button');
@@ -441,7 +441,7 @@ describe('Quartz Scheduler', () => {
     ));
     render(
       <FetchContext.Provider value={fetchContext}>
-        <ResetButton selectedApp="Test Application" triggerName="Test Trigger" />
+        <ResetButton selectedApp="Test Application" trigger_name="Test Trigger" />
       </FetchContext.Provider>
     );
     const button = screen.getByRole('button');
@@ -466,7 +466,7 @@ describe('Quartz Scheduler', () => {
     ));
     render(
       <FetchContext.Provider value={fetchContext}>
-        <CreateButton selectedApp="Test Application" triggerName="Test Trigger" />
+        <CreateButton selectedApp="Test Application" trigger_name="Test Trigger" />
       </FetchContext.Provider>
     );
     const button = screen.getByRole('button');
@@ -497,7 +497,7 @@ describe('Quartz Scheduler', () => {
     ));
     render(
       <FetchContext.Provider value={fetchContext}>
-        <CreateButton selectedApp="Test Application" triggerName="Test Trigger" />
+        <CreateButton selectedApp="Test Application" trigger_name="Test Trigger" />
       </FetchContext.Provider>
     );
     const button = screen.getByRole('button');
@@ -526,7 +526,7 @@ describe('Quartz Scheduler', () => {
     ));
     render(
       <FetchContext.Provider value={fetchContext}>
-        <CreateButton selectedApp="Test Application" triggerName="Test Trigger" />
+        <CreateButton selectedApp="Test Application" trigger_name="Test Trigger" />
       </FetchContext.Provider>
     );
     const button = screen.getByRole('button');
@@ -551,7 +551,7 @@ describe('Quartz Scheduler', () => {
     ));
     const sampleTrigger = {
       schedule: {
-        triggerType: 'CRON',
+        trigger_type: 'CRON',
         interval: '0 0/2 * * * ?',
       },
       name: 'Test Trigger',
@@ -597,7 +597,7 @@ describe('Quartz Scheduler', () => {
     ));
     const sampleTrigger = {
       schedule: {
-        triggerType: 'CRON',
+        trigger_type: 'CRON',
         interval: '0 0/2 * * * ?',
       },
       name: 'Test Trigger',
@@ -635,7 +635,7 @@ describe('Quartz Scheduler', () => {
     ));
     const sampleTrigger = {
       schedule: {
-        triggerType: 'CRON',
+        trigger_type: 'CRON',
         interval: '0 0/2 * * * ?',
       },
       name: 'Test Trigger',

@@ -28,8 +28,8 @@ import { ErrorMessage, SuccessMessage } from '../../common/PageMessages';
 
 export const FetchContext = React.createContext(undefined);
 
-export function PauseButton({ selectedApp, triggerName }) {
-  const { run: pauseRun } = PauseTrigger(selectedApp, triggerName);
+export function PauseButton({ selectedApp, trigger_name }) {
+  const { run: pauseRun } = PauseTrigger(selectedApp, trigger_name);
   const fetchContext = useContext(FetchContext);
   const pause = async (event) => {
     event.preventDefault();
@@ -48,8 +48,8 @@ export function PauseButton({ selectedApp, triggerName }) {
   );
 }
 
-export function ResetButton({ selectedApp, triggerName }) {
-  const { run: resetRun } = ResetTrigger(selectedApp, triggerName);
+export function ResetButton({ selectedApp, trigger_name }) {
+  const { run: resetRun } = ResetTrigger(selectedApp, trigger_name);
   const fetchContext = useContext(FetchContext);
   const reset = async (event) => {
     event.preventDefault();
@@ -68,8 +68,8 @@ export function ResetButton({ selectedApp, triggerName }) {
   );
 }
 
-export function ResumeButton({ selectedApp, triggerName }) {
-  const { run: resumeRun } = ResumeTrigger(selectedApp, triggerName);
+export function ResumeButton({ selectedApp, trigger_name }) {
+  const { run: resumeRun } = ResumeTrigger(selectedApp, trigger_name);
   const fetchContext = useContext(FetchContext);
   const resume = async (event) => {
     event.preventDefault();
@@ -88,8 +88,8 @@ export function ResumeButton({ selectedApp, triggerName }) {
   );
 }
 
-export function CreateButton({ selectedApp, triggerName }) {
-  const { run: createRun } = CreateTrigger(selectedApp, triggerName);
+export function CreateButton({ selectedApp, trigger_name }) {
+  const { run: createRun } = CreateTrigger(selectedApp, trigger_name);
   const fetchContext = useContext(FetchContext);
   const create = async (event) => {
     event.preventDefault();
@@ -115,7 +115,7 @@ export function EditButton({ selectedApp, trigger }) {
   const toggleModal = () => setState({ show: !state.show });
   const { run: editRun } = UpdateTrigger(
     selectedApp, trigger.name, {
-      triggerType: trigger.schedule.triggerType,
+      trigger_type: trigger.schedule.trigger_type,
       interval,
     });
   const fetchContext = useContext(FetchContext);
@@ -151,7 +151,7 @@ export function EditButton({ selectedApp, trigger }) {
                 Trigger : {trigger.name}
               </h2>
               <div className="col-md-12 row">
-                <h2 className="heading-3 col-md-6">Trigger Type: {trigger.schedule.triggerType}</h2>
+                <h2 className="heading-3 col-md-6">Trigger Type: {trigger.schedule.trigger_type}</h2>
                 <Input
                   className="dls-white-bg col-md-offset-3 col-md-6"
                   defaultValue={trigger.schedule.interval}
@@ -182,14 +182,14 @@ export function TriggerDataListBody({
   return listData.body.map((trigger) => (
     <DataTableRowV2 key={trigger.name}>
       <DataTableCellV2>{trigger.name}</DataTableCellV2>
-      <DataTableCellV2>{trigger.schedule.triggerType}</DataTableCellV2>
+      <DataTableCellV2>{trigger.schedule.trigger_type}</DataTableCellV2>
       <DataTableCellV2>{trigger.schedule.interval}</DataTableCellV2>
       <DataTableCellV2>{trigger.state}</DataTableCellV2>
       <DataTableCellV2 className="col-md-12">
-        <CreateButton selectedApp={selectedApp} triggerName={trigger.name} />
-        <PauseButton selectedApp={selectedApp} triggerName={trigger.name} />
-        <ResetButton selectedApp={selectedApp} triggerName={trigger.name} />
-        <ResumeButton selectedApp={selectedApp} triggerName={trigger.name} />
+        <CreateButton selectedApp={selectedApp} trigger_name={trigger.name} />
+        <PauseButton selectedApp={selectedApp} trigger_name={trigger.name} />
+        <ResetButton selectedApp={selectedApp} trigger_name={trigger.name} />
+        <ResumeButton selectedApp={selectedApp} trigger_name={trigger.name} />
         <EditButton selectedApp={selectedApp} trigger={trigger} />
       </DataTableCellV2>
     </DataTableRowV2>
@@ -286,22 +286,22 @@ TriggerList.propTypes = {
 
 CreateButton.propTypes = {
   selectedApp: PropTypes.string.isRequired,
-  triggerName: PropTypes.string.isRequired,
+  trigger_name: PropTypes.string.isRequired,
 };
 
 PauseButton.propTypes = {
   selectedApp: PropTypes.string.isRequired,
-  triggerName: PropTypes.string.isRequired,
+  trigger_name: PropTypes.string.isRequired,
 };
 
 ResumeButton.propTypes = {
   selectedApp: PropTypes.string.isRequired,
-  triggerName: PropTypes.string.isRequired,
+  trigger_name: PropTypes.string.isRequired,
 };
 
 ResetButton.propTypes = {
   selectedApp: PropTypes.string.isRequired,
-  triggerName: PropTypes.string.isRequired,
+  trigger_name: PropTypes.string.isRequired,
 };
 
 EditButton.propTypes = {
@@ -309,7 +309,7 @@ EditButton.propTypes = {
   trigger: PropTypes.shape({
     name: PropTypes.string,
     schedule: PropTypes.shape({
-      triggerType: PropTypes.string,
+      trigger_type: PropTypes.string,
       interval: PropTypes.string,
     }),
   }).isRequired,
