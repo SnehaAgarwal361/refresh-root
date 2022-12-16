@@ -43,7 +43,7 @@ const ApplicationProperties = () => {
     {
       defer: applicationFilter?.trim().length <= 1,
       body: {
-        applicationName: applicationFilter,
+        application_name: applicationFilter,
       },
     });
 
@@ -52,7 +52,7 @@ const ApplicationProperties = () => {
     {
       defer: true,
       body: {
-        applicationName: applicationFilter,
+        application_name: applicationFilter,
         property: {
           ...selectedRow?.application,
         },
@@ -120,7 +120,7 @@ const ApplicationProperties = () => {
         setTableData(fetchData.body);
       } else {
         const filteredData = tableData.filter(
-          (row) => row.applicationName?.toLowerCase()
+          (row) => row.application_name?.toLowerCase()
             .includes(inputValue.toLowerCase())
             || row.name?.toLowerCase()
               .includes(inputValue.toLowerCase())
@@ -183,10 +183,10 @@ const ApplicationProperties = () => {
               <DataTableBodyV2>
                 {paginatedRows.map((row, i) => (
                   <DataTableRowV2
-                    key={`${row.name}-${row.applicationName}`}
+                    key={`${row.name}-${row.application_name}`}
                     onClick={() => modalRef.current.openModal(row, i)}
                   >
-                    <DataTableCellV2>{row.applicationName}</DataTableCellV2>
+                    <DataTableCellV2>{row.application_name}</DataTableCellV2>
                     <DataTableCellV2>{row.name}</DataTableCellV2>
                     <DataTableCellV2>{row.group}</DataTableCellV2>
                     <DataTableCellV2>{row.description}</DataTableCellV2>

@@ -110,7 +110,7 @@ export const apiTableData = [
 export const expectedUpdatePayLoad = {
   defer: true,
   body: {
-    applicationName: 'TEST',
+    application_name: 'TEST',
     property: {
       application_name: 'CUSTOMER_ACCOUNT_GATEWAY',
       name: 'GET_DEMOGRAPHICS_API.ENABLED',

@@ -7,7 +7,7 @@ export function TopPanel({ setApp }) {
   return (
     <div className="pad-2-md-up pad-1-sm-down shadow-2">
       <div className="col-md-6 row col-md-offset-4">
-        <Label className="margin-2-t margin-3-r" htmlFor="applicationName">Application Name</Label>
+        <Label className="margin-2-t margin-3-r" htmlFor="application_name">Application Name</Label>
         <Select
           id="selectedApplication"
           data-testid="selectedApplication"
