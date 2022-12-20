@@ -102,15 +102,15 @@ export const apiTableData = [
     value: 'TRUE',
     description: 'Switch enabling/disabling Get Demographics API',
     version: 78,
-    lastUpdated: {
+    last_updated: {
       source: 'SUPPORT-UI',
-      userId: 'tester',
+      user_id: 'tester',
     },
   }];
 export const expectedUpdatePayLoad = {
   defer: true,
   body: {
-    applicationName: 'TEST',
+    application_name: 'TEST',
     property: {
       application_name: 'CUSTOMER_ACCOUNT_GATEWAY',
       name: 'GET_DEMOGRAPHICS_API.ENABLED',
@@ -118,9 +118,9 @@ export const expectedUpdatePayLoad = {
       value: 'FALSE',
       description: 'Switch enabling/disabling Get Demographics API',
       version: 78,
-      lastUpdated: {
+      last_updated: {
         source: 'SUPPORT-UI',
-        userId: 'tester',
+        user_id: 'tester',
       },
     },
   },

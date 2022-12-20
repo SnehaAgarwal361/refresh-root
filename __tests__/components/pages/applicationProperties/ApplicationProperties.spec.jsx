@@ -79,7 +79,7 @@ describe('Application properties', () => {
       .toBeTruthy();
     expect(fetchMock)
       .toHaveBeenCalledWith('ReadKnowYourCustomerRefreshApplicationProperties.v1', {
-        body: { applicationName: 'TEST' },
+        body: { application_name: 'TEST' },
         defer: false,
       });
     return expect(screen.queryByText('Test property'))
@@ -94,7 +94,7 @@ describe('Application properties', () => {
     userEvent.selectOptions(screen.getByTestId('applicationFilterSelect'), 'Test Application');
     expect(fetchMock)
       .toHaveBeenCalledWith('ReadKnowYourCustomerRefreshApplicationProperties.v1', {
-        body: { applicationName: 'TEST' },
+        body: { application_name: 'TEST' },
         defer: false,
       });
     return screen.findByTestId('searchTerm')

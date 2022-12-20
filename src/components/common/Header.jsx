@@ -38,12 +38,6 @@ const Header = () => {
             </a>
           </li>
           <li>
-            <a href="/workflow-visualization" className="display-block icon-hover">
-              <span className="icon icon-sm dls-icon-activity" />
-              <span className="pad-1-l">Workflow Visualization</span>
-            </a>
-          </li>
-          <li>
             <a href={logoutUrl} className="display-block icon-hover">
               <span className="icon icon-sm dls-icon-airplane" />
               <span className="pad-1-l">Logout</span>

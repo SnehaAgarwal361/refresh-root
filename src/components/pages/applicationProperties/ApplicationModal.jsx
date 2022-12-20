@@ -42,7 +42,7 @@ export const ApplicationModal = forwardRef((props, ref) => {
     e.preventDefault();
     const applicationProp = { ...application };
     applicationProp.value = value;
-    applicationProp.lastUpdated.userId = adsId;
+    applicationProp.last_updated.user_id = adsId;
     props.saveApplication({ application: applicationProp, index });
     toggleModal();
   };
