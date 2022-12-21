@@ -52,10 +52,8 @@ describe('Application properties', () => {
     useOneDataFetchye.mockImplementation(mockApiImplementation(createApiResponseJson(20)));
     render(<ApplicationProperties />);
     userEvent.selectOptions(screen.getByTestId('applicationFilterSelect'), 'Test Application');
-    expect(screen.getByText('Test Application').selected)
-      .toBeTruthy();
-    expect(screen.getByTestId('itemsPageDropDown'))
-      .toBeInTheDocument();
+    expect(screen.getAllByText('Test Application').length).toBeGreaterThanOrEqual(10);
+    expect(screen.getByTestId('itemsPageDropDown')).toBeInTheDocument();
     userEvent.selectOptions(screen.getByTestId('itemsPageDropDown'), '10');
     userEvent.click(screen.getByRole('button', { name: /Next/ }));
     return expect(screen.getByText('Test property19'))
