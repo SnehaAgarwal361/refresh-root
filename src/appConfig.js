@@ -4,7 +4,7 @@ import csp from './csp';
 /*
  * This is the URL needed by axp-intranet-identity for calling One Data calls
  */
-const faasApiUrls = {
+const oneDataApiUrls = {
   e1: 'https://functions-dev.aexp.com',
   e2: 'https://functions-qa.aexp.com',
   e3: 'https://functions.aexp.com',
@@ -45,16 +45,8 @@ export default {
   createSsrFetch: timeoutBrowserLikeFetch(),
   provideStateConfig: {
     oneDataApiUrl: {
-      client: {
-        e1: 'https://functions-dev.aexp.com',
-        e2: 'https://functions-qa.aexp.com',
-        e3: 'https://functions.aexp.com',
-      },
-      server: {
-        e1: '[Insert One Data E1 URL]',
-        e2: '[Insert One Data E2 URL]',
-        e3: '[Insert One Data E3 URL]',
-      },
+      client: oneDataApiUrls,
+      server: oneDataApiUrls,
     },
     authblueLoginBaseUrl: {
       client: authblueLoginBaseUrls,
@@ -65,8 +57,8 @@ export default {
       server: authblueLogoutBaseUrls,
     },
     faasApiUrl: {
-      client: faasApiUrls,
-      server: faasApiUrls,
+      client: oneDataApiUrls,
+      server: oneDataApiUrls,
     },
     intranetIdentityBaseUrl: {
       client: intranetIdentityBaseUrls,
