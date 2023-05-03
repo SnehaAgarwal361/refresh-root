@@ -1,3 +1,3 @@
-import { useSelector } from 'react-redux';
+import { useAuthBlueSso } from 'use-authblue-sso';
 
-export const useAdsId = () => useSelector((state) => state.getIn(['modules', 'axp-intranet-identity', 'profile', 'uid']));
+export const useAdsId = () => useAuthBlueSso().user.attributes.adsId;

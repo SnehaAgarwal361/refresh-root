@@ -6,13 +6,7 @@ import { configureStore } from '@reduxjs/toolkit';
 import Home from '../../src/components/Home';
 
 const mockConfigState = fromJS({
-  modules: {
-    'axp-intranet-identity': {
-      profile: {
-        uid: 'testUser',
-      },
-    },
-  },
+
 });
 
 function stateReducer(state = mockConfigState) {

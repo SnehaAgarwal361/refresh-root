@@ -16,6 +16,7 @@ const userAttributesAndGroupsToCollect = {
   attributes: [
     adsUserAttributes.adsId,
   ],
+  groups: ['SSO_GG-ADS-Maestro-Refresh-Ui-Users'],
 };
 
 export function AuthBlueSso(props) {
@@ -24,7 +25,6 @@ export function AuthBlueSso(props) {
   };
 
   const intranetEnv = useSelector((state) => state.getIn(['config', 'intranetEnv']));
-
   const { children } = props;
   return (
     <AuthBlueProvider env={intranetEnv} scope={userAttributesAndGroupsToCollect}>
