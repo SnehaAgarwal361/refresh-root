@@ -6,15 +6,14 @@ import { Quartz } from './components/pages/quartz/Quartz';
 import { applicationPropertiesRoute, quartzRoute } from './constants';
 
 const childRoutes = () => [
-  // eslint-disable-next-line react/jsx-key -- Key not required
-
-    <Route path="/" component={Home} />,
-    <Route
-      key={applicationPropertiesRoute}
-      path={applicationPropertiesRoute}
-      component={ApplicationProperties}
-    />,
-    <Route key={quartzRoute} path={quartzRoute} component={Quartz} />
+  // eslint-disable-next-line react/jsx-key -- Key not require
+  <Route path="/" component={Home} />,
+  <Route
+    key={applicationPropertiesRoute}
+    path={applicationPropertiesRoute}
+    component={ApplicationProperties}
+  />,
+  <Route key={quartzRoute} path={quartzRoute} component={Quartz} />,
 ];
 
 export default childRoutes;

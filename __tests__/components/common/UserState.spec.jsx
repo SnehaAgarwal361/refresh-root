@@ -1,43 +1,29 @@
-import { fromJS } from 'immutable';
-import { configureStore } from '@reduxjs/toolkit';
 import { render, screen } from '@testing-library/react';
-import { Provider } from 'react-redux';
 import React from 'react';
-import { useAdsId } from '../../../src/components/common/UserState';
 import '@testing-library/jest-dom';
+import { AuthBlueProvider, useAuthBlueSso } from 'use-authblue-sso';
 
-const mockConfigState = fromJS({
-  modules: {
-    'axp-intranet-identity': {
-      profile: {
-        uid: 'testUser',
-      },
-    },
-  },
-});
-
-function stateReducer(state = mockConfigState) {
-  return state;
-}
-
-const store = configureStore({
-  reducer: stateReducer,
-});
+const userAttributesAndGroupsToCollect = {
+  attributes: [
+    'testUser',
+  ],
+  groups: ['SSO_GG-ADS-Maestro-Refresh-Ui-Users'],
+};
 
 function TestComponent() {
-  const adsId = useAdsId();
+  const testUser = useAuthBlueSso().user.attributes;
   return (
     <div>
-      {adsId}
+      <text>{testUser}</text>
     </div>
   );
 }
 
 test('Retrieve userId from State', () => {
   render(
-    <Provider store={store}>
+    <AuthBlueProvider env="e0" scope={userAttributesAndGroupsToCollect}>
       <TestComponent />
-    </Provider>
+    </AuthBlueProvider>
   );
   expect(screen.getByText('testUser')).toBeInTheDocument();
 });

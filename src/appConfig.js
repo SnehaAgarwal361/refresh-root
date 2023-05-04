@@ -1,7 +1,6 @@
 import { timeoutBrowserLikeFetch } from '@americanexpress/browser-like-fetch';
 import csp from './csp';
 
-
 const oneDataApiUrls = {
   e1: 'https://functions-dev.aexp.com',
   e2: 'https://functions-qa.aexp.com',
@@ -30,6 +29,6 @@ export default {
     faasApiUrl: {
       client: oneDataApiUrls,
       server: oneDataApiUrls,
-    }
+    },
   },
 };

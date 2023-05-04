@@ -1,26 +1,20 @@
 import { render } from '@testing-library/react';
 import React from 'react';
-import { Provider } from 'react-redux';
-import { fromJS } from 'immutable';
-import { configureStore } from '@reduxjs/toolkit';
+import { AuthBlueProvider } from 'use-authblue-sso';
 import Home from '../../src/components/Home';
 
-const mockConfigState = fromJS({
+const userAttributesAndGroupsToCollect = {
+  attributes: [
+    'testADS',
+  ],
+  groups: ['SSO_GG-ADS-Maestro-Refresh-Ui-Users'],
+};
 
-});
-
-function stateReducer(state = mockConfigState) {
-  return state;
-}
-
-const store = configureStore({
-  reducer: stateReducer,
-});
 test('Display home screen as expected', () => {
   const { container } = render(
-    <Provider store={store}>
+    <AuthBlueProvider env="e0" scope={userAttributesAndGroupsToCollect}>
       <Home />
-    </Provider>
+    </AuthBlueProvider>
   );
   expect(container.firstChild)
     .toMatchSnapshot();
