@@ -41,7 +41,7 @@
       "rootModuleName": "know-your-customer-refresh-root",
       "dockerImage": "artifactory.aexp.com/dockerproxy/oneamex/one-app-dev:5",
       "envVars": {
-        "ONE_CONFIG_ENV": "e0"
+        "ONE_CONFIG_ENV": "e1"
       }
     },
     "risk": {
