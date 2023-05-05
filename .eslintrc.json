@@ -8,6 +8,7 @@
   },
   "rules": {
     "eslint-comments/no-unused-disable": "off",
+    "react/jsx-props-no-spreading": "off",
     "camelcase": "off"
   }
 }

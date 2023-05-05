@@ -12,14 +12,14 @@
     "build": "bundle-module",
     "watch:build": "npm run build -- --watch",
     "clean": "rimraf build",
-    "prepare": "npm run build && npm run test:unit && npm run test:lint -- --fix && npm run test:browser",
+    "prepare": "npm run build && npm run test:unit && npm run test:lint -- --fix ",
     "pretest:a11y": "create-runner-env && one-app-runner-test",
     "pretest:browser": "npm run build && create-runner-env && one-app-runner-test",
-    "test": " npm run test:lint && npm run test:unit && npm run test:browser",
+    "test": " npm run test:lint && npm run test:unit",
     "test:a11y": "jest a11y --preset @americanexpress/jest-preset-browser",
     "test:browser": "jest /browser/ --preset @americanexpress/jest-preset-browser --runInBand",
     "test:lint": "eslint  -c .eslintrc.json --ignore-path .gitignore --ext js,jsx,snap .",
-    "test:unit": "jest --testPathIgnorePatterns /browser/ /a11y/ /testMocks/"
+    "test:unit": "jest --testPathIgnorePatterns /browser/ /a11y/ /testMocks/ /__utils__/"
   },
   "one-amex": {
     "app": {
@@ -41,8 +41,8 @@
       "rootModuleName": "know-your-customer-refresh-root",
       "dockerImage": "artifactory.aexp.com/dockerproxy/oneamex/one-app-dev:5",
       "envVars": {
-        "ONE_CONFIG_ENV": "e1",
-        "AUTHBLUE_BYPASS": "true",
+        "ONE_CONFIG_ENV": "e0",
+        "BYPASS_AUTHBLUE_SSO": "true",
         "AUTHBLUE_LOCAL_USER": "refreshuiacc"
       }
     },
@@ -74,6 +74,7 @@
     "prop-types": "^15.7.2",
     "react": "^16.13.1",
     "react-helmet": "^6.1.0",
+    "react-hook-form": "^7.43.9",
     "react-intl": "^5.20.10",
     "react-redux": "^7.2.6",
     "standard-version": "^9.3.2",

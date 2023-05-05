@@ -1,3 +1,3 @@
-import { useAuthBlueSso } from 'use-authblue-sso';
+import useAuthBlueSsoWithBypass from './UseAuthBlueSsoWithBypass';
 
-export const useAdsId = () => useAuthBlueSso().user.attributes.adsId;
+export const useAdsId = () => useAuthBlueSsoWithBypass().user.attributes.adsId;

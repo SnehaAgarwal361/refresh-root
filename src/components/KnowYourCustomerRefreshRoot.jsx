@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 import childRoutes from '../childRoutes';
 import { DLSStyle } from './common/DLSStyle';
 import Header from './common/Header';
-import { AuthBlueSso } from './common/AuthBlueSSO';
+import { AuthBlueSso } from './common/AuthBlueSso';
 
 const KnowYourCustomerRefreshRoot = ({ languageData, locale, children }) => (
   <AuthBlueSso>

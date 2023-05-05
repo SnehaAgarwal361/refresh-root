@@ -1,10 +1,10 @@
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
-import { useAuthBlueSso } from 'use-authblue-sso';
 import styles from './styles.scss';
+import useAuthBlueSsoWithBypass from './common/UseAuthBlueSsoWithBypass';
 
 const Home = () => {
-  const { user } = useAuthBlueSso();
+  const { user } = useAuthBlueSsoWithBypass();
   return (
     <main className="flex flex-column">
       <div className={`${styles.kycMainLogo}`}>

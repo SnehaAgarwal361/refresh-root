@@ -1,21 +1,11 @@
-import { render } from '@testing-library/react';
 import React from 'react';
-import { AuthBlueProvider } from 'use-authblue-sso';
 import Home from '../../src/components/Home';
+import { renderAuthBlueSso } from '../__utils__/renderWithAuthblue';
 
-const userAttributesAndGroupsToCollect = {
-  attributes: [
-    'testADS',
-  ],
-  groups: ['SSO_GG-ADS-Maestro-Refresh-Ui-Users'],
-};
-
-test('Display home screen as expected', () => {
-  const { container } = render(
-    <AuthBlueProvider env="e0" scope={userAttributesAndGroupsToCollect}>
-      <Home />
-    </AuthBlueProvider>
-  );
-  expect(container.firstChild)
-    .toMatchSnapshot();
+describe('Should render as expected', () => {
+  it('Display home screen as expected', () => {
+    const { renderResult } = renderAuthBlueSso(<Home />, ['config', 'BYPASS_AUTHBLUE_SSO', true]);
+    expect(renderResult.container.firstChild)
+      .toMatchSnapshot();
+  });
 });

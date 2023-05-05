@@ -1,20 +1,26 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Display home screen as expected 1`] = `
+exports[`Should render as expected Display home screen as expected 1`] = `
 <div
-  class="container flex flex-justify-center pad-4"
+  data-props="{}"
+  data-testid="AuthBlueSsoBypass"
+  name="AuthBlueSsoBypass"
 >
-  <div
-    class="height-full"
+  <main
+    class="flex flex-column"
   >
     <div
-      aria-busy="true"
-      aria-label=""
-      aria-valuemax="100"
-      aria-valuemin="0"
-      class="css-7y6923-ProgressCircle"
-      role="progressbar"
-    />
-  </div>
+      class="kycMainLogo"
+    >
+      <title>
+        BypassedTestUser
+      </title>
+    </div>
+    <div
+      class="heading-5 dls-bright-blue margin-center"
+    >
+      translated string for id: HomePageBodyHeader
+    </div>
+  </main>
 </div>
 `;

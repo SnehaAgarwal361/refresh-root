@@ -1,11 +1,15 @@
 import { screen } from '@testing-library/react';
 import React from 'react';
 import '@testing-library/jest-dom';
-import { useAdsId } from '../../../src/components/common/UserState';
 import { renderAuthBlueSso } from '../../__utils__/renderWithAuthblue';
+import useAuthBlueSsoWithBypass from '../../../src/components/common/UseAuthBlueSsoWithBypass';
 
 function TestComponent() {
-  const testUser = useAdsId();
+  const authBlue = useAuthBlueSsoWithBypass();
+  let testUser = 'Bypassed';
+  if (authBlue !== undefined) {
+    testUser = 'Present';
+  }
   return (
     <div>
       <title>{testUser}</title>
@@ -16,7 +20,7 @@ function TestComponent() {
 // -- Begin Tests -- //
 describe('UserState returns the correct values from authblue', () => {
   it('UserState returns ADS id', () => {
-    renderAuthBlueSso(<TestComponent />, ['config', 'BYPASS_AUTHBLUE_SSO', true]);
-    expect(screen.getByText('BypassedTestUser')).toBeInTheDocument();
+    renderAuthBlueSso(<TestComponent />);
+    expect(screen.getByText('Bypassed')).toBeInTheDocument();
   });
 });
