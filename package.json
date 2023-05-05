@@ -12,10 +12,10 @@
     "build": "bundle-module",
     "watch:build": "npm run build -- --watch",
     "clean": "rimraf build",
-    "prepare": "npm run build && npm run test:unit && npm run test:lint -- --fix ",
+    "prepare": "npm run build && npm run test:unit && npm run test:lint -- --fix && npm run test:browser",
     "pretest:a11y": "create-runner-env && one-app-runner-test",
     "pretest:browser": "npm run build && create-runner-env && one-app-runner-test",
-    "test": " npm run test:lint && npm run test:unit",
+    "test": " npm run test:lint && npm run test:unit && npm run test:browser",
     "test:a11y": "jest a11y --preset @americanexpress/jest-preset-browser",
     "test:browser": "jest /browser/ --preset @americanexpress/jest-preset-browser --runInBand",
     "test:lint": "eslint  -c .eslintrc.json --ignore-path .gitignore --ext js,jsx,snap .",
@@ -41,9 +41,7 @@
       "rootModuleName": "know-your-customer-refresh-root",
       "dockerImage": "artifactory.aexp.com/dockerproxy/oneamex/one-app-dev:5",
       "envVars": {
-        "ONE_CONFIG_ENV": "e0",
-        "BYPASS_AUTHBLUE_SSO": "true",
-        "AUTHBLUE_LOCAL_USER": "refreshuiacc"
+        "ONE_CONFIG_ENV": "e0"
       }
     },
     "risk": {

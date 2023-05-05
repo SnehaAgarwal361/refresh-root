@@ -30,5 +30,8 @@ export default {
       client: oneDataApiUrls,
       server: oneDataApiUrls,
     },
+    BYPASS_AUTHBLUE_SSO: clientAndServerConfig({
+      e0: true,
+    }),
   },
 };
