@@ -6,13 +6,6 @@ import {
 } from 'use-authblue-sso';
 import AuthBlueSsoBypass from './AuthBlueSsoBypass';
 
-/**
- * *** NOTICE!! Sample Application Scope ***
- * Please review the scope documentation and make the appropriate changes needed
- * for your application!!!
- *
- * @see https://github.aexp.com/amex-eng/authblue-use-authblue-sso/wiki/
- */
 const userAttributesAndGroupsToCollect = {
   attributes: [
     adsUserAttributes.adsId,
