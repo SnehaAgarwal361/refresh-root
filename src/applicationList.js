@@ -29,4 +29,9 @@ export const applicationList = [
     description: 'Tracker keeps track of the data blocks that need to be refreshed at a customer level',
     id: 'TRK',
   },
+  {
+    friendlyName: 'Customer Outbound',
+    description: 'Customer Outbound allows sending outbound communications to customers',
+    id: 'COU',
+  },
 ];

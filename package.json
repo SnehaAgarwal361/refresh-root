@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "description": "Used to create UI for all the configurable properties in the international kyc refresh application",
   "contributors": [
-    " Nagaraj VC <nagaraj.v.chandrashekar@amex.com>",
-    "Chris Nicolas Gilbert <christopher.n.gilbert@aexp.com>"
+    "Nagaraj VC <nagaraj.v.chandrashekar@amex.com>",
+    "Sreeram Iyer <Sreeram.Iyer@aexp.com>"
   ],
   "scripts": {
     "start": "one-app-runner",
@@ -49,12 +49,12 @@
     }
   },
   "dependencies": {
+    "@americanexpress/one-app-module-wrapper": "^3.3.1",
     "@americanexpress/browser-like-fetch": "^1.0.1",
     "@americanexpress/content-security-policy": "^2.36.0",
     "@americanexpress/dls-react": "^1.25.3",
     "@americanexpress/fetchye-amex": "^0.4.0",
     "@americanexpress/one-app-ducks": "^4.3.3",
-    "@americanexpress/one-app-module-wrapper": "^3.3.1",
     "@americanexpress/one-app-router": "^1.1.0",
     "@americanexpress/react-ddl": "^0.1.4",
     "@commitlint/cli": "^15.0.0",
