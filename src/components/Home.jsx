@@ -1,15 +1,15 @@
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
-import { useSelector } from 'react-redux';
 import styles from './styles.scss';
+import useAuthBlueSsoWithBypass from './common/UseAuthBlueSsoWithBypass';
 
 const Home = () => {
-  const adsId = useSelector((state) => state.getIn(['modules', 'axp-intranet-identity', 'profile', 'uid']));
+  const { user } = useAuthBlueSsoWithBypass();
   return (
     <main className="flex flex-column">
       <div className={`${styles.kycMainLogo}`}>
         {/* <img src="../assets/final-logo.png" /> */}
-        <title>{adsId}</title>
+        <title>{user.attributes.adsId}</title>
       </div>
       <div className="heading-5 dls-bright-blue margin-center"><FormattedMessage
         id="HomePageBodyHeader"

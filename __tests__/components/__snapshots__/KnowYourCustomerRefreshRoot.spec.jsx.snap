@@ -23,17 +23,19 @@ exports[`TestableKnowYourCustomerRefreshRoot loadModuleData should call language
 `;
 
 exports[`TestableKnowYourCustomerRefreshRoot should render as expected module should render correct JSX 1`] = `
-<IntlProviderMock
-  locale="localeMock"
-  messages={
-    Object {
-      "intlKeyMock": "intlValueMock",
+<AuthBlueSso>
+  <IntlProviderMock
+    locale="localeMock"
+    messages={
+      Object {
+        "intlKeyMock": "intlValueMock",
+      }
     }
-  }
->
-  <DLSStyle
-    version="6.18.1"
-  />
-  <Header />
-</IntlProviderMock>
+  >
+    <DLSStyle
+      version="6.18.1"
+    />
+    <Header />
+  </IntlProviderMock>
+</AuthBlueSso>
 `;

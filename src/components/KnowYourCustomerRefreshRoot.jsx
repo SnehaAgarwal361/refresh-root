@@ -6,14 +6,17 @@ import PropTypes from 'prop-types';
 import childRoutes from '../childRoutes';
 import { DLSStyle } from './common/DLSStyle';
 import Header from './common/Header';
+import { AuthBlueSso } from './common/AuthBlueSso';
 
 const KnowYourCustomerRefreshRoot = ({ languageData, locale, children }) => (
-  <IntlProvider locale={locale} messages={languageData}>
-    <DLSStyle version="6.18.1" />
-    <Header />
-    {/* eslint-disable-next-line react/jsx-no-useless-fragment -- Fragment gets popuated later */}
-    <Fragment>{children}</Fragment>
-  </IntlProvider>
+  <AuthBlueSso>
+    <IntlProvider locale={locale} messages={languageData}>
+      <DLSStyle version="6.18.1" />
+      <Header />
+      {/* eslint-disable-next-line react/jsx-no-useless-fragment -- Fragment gets popuated later */}
+      <Fragment>{children}</Fragment>
+    </IntlProvider>
+  </AuthBlueSso>
 );
 
 export const TestableKnowYourCustomerRefreshRoot = KnowYourCustomerRefreshRoot;

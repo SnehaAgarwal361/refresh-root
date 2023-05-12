@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import { loadLanguagePack } from '@americanexpress/one-app-ducks';
-import ModuleRoute from 'holocron-module-route';
+import { Route } from '@americanexpress/one-app-router';
 import {
   loadModuleData,
   TestableKnowYourCustomerRefreshRoot,
@@ -44,7 +44,7 @@ describe('TestableKnowYourCustomerRefreshRoot', () => {
         .toEqual(expect.any(Array));
       childRoutes()
         .forEach((route) => expect(route.type)
-          .toEqual(ModuleRoute));
+          .toEqual(Route));
     });
   });
 });

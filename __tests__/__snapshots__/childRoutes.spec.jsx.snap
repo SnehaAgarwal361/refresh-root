@@ -2,22 +2,17 @@
 
 exports[`childRoutes should have the proper routes 1`] = `
 Array [
-  <ModuleRoute
-    hasChildRoutes={false}
-    moduleName="axp-intranet-identity"
-  >
-    <Route
-      component={[Function]}
-      path="/"
-    />
-    <Route
-      component={[Function]}
-      path="/application-properties"
-    />
-    <Route
-      component={[Function]}
-      path="/quartz"
-    />
-  </ModuleRoute>,
+  <Route
+    component={[Function]}
+    path="/"
+  />,
+  <Route
+    component={[Function]}
+    path="/application-properties"
+  />,
+  <Route
+    component={[Function]}
+    path="/quartz"
+  />,
 ]
 `;
