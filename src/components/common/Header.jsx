@@ -1,8 +1,10 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
+
+const { useAuthBlueSso } = require('use-authblue-sso');
 
 const Header = () => {
-  const logoutUrl = useSelector((state) => state.getIn(['config', 'authblueLogoutBaseUrl']));
+  const { urls } = useAuthBlueSso();
+  const logoutUrl = urls.getLogoffUrl();
   return (
     <header
       id="dls-nav"
