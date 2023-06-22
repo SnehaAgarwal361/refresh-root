@@ -2,7 +2,6 @@ import { timeoutBrowserLikeFetch } from '@americanexpress/browser-like-fetch';
 import csp from './csp';
 
 const oneDataApiUrls = {
-  e0: 'http://localhost:8443',
   e1: 'https://functions-dev.aexp.com',
   e2: 'https://functions-qa.aexp.com',
   e3: 'https://functions.aexp.com',
@@ -32,7 +31,7 @@ export default {
       server: oneDataApiUrls,
     },
     BYPASS_AUTHBLUE_SSO: clientAndServerConfig({
-      e0: false,
+      e0: true,
     }),
   },
 };
