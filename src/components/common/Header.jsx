@@ -1,9 +1,9 @@
 import React from 'react';
 
-const { useAuthBlueSso } = require('use-authblue-sso');
+import useAuthBlueSsoWithBypass from './UseAuthBlueSsoWithBypass';
 
 const Header = () => {
-  const { urls } = useAuthBlueSso();
+  const { urls } = useAuthBlueSsoWithBypass();
   const logoutUrl = urls.getLogoffUrl();
   return (
     <header
