@@ -1,23 +1,30 @@
 import { render, screen } from '@testing-library/react';
 import React from 'react';
-import { useAuthBlueSso } from 'use-authblue-sso';
+import { Provider } from 'react-redux';
+import { configureStore } from '@reduxjs/toolkit';
+import { Map as iMap } from 'immutable';
 import Header from '../../../src/components/common/Header';
 
 require('@testing-library/jest-dom/extend-expect');
 
-jest.mock('use-authblue-sso', () => ({
-  ...jest.requireActual('react-redux'),
-  useAuthBlueSso: jest.fn(),
-  useDispatch: jest.fn(),
-  useSelector: jest.fn(),
-}));
+const reduxState = iMap({
+  config: {
+    intranetEnv: 'e0',
+    BYPASS_AUTHBLUE_SSO: true,
+  },
+});
+
+const store = configureStore({
+  reducer: (state = reduxState) => state,
+});
 
 describe('Header', () => {
   it('Display home screen as expected', async () => {
-    useAuthBlueSso.mockReturnValue({
-      urls: { getLogoffUrl: () => 'https://ssoisvc-dev.aexp.com/ssoi/logoff?channel=use-authblue-sso@1.2.2' },
-    });
-    render(<Header />);
+    render(
+      <Provider store={store}>
+        <Header />
+      </Provider>
+    );
     expect(screen.queryByRole('img'))
       .toBeInTheDocument();
     expect(screen.queryByRole('banner'))

@@ -18,4 +18,7 @@ export const mockUseAuthBlueSso = {
       adsId: 'BypassedTestUser',
     },
   },
+  urls: {
+    getLogoffUrl: () => 'https://ssoisvc-dev.aexp.com/ssoi/logoff?channel=use-authblue-sso@1.2.2',
+  },
 };
