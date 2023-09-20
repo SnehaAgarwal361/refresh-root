@@ -34,4 +34,9 @@ export const applicationList = [
     description: 'Customer Outbound allows sending outbound communications to customers',
     id: 'COU',
   },
+  {
+    friendlyName: 'Timeline',
+    description: 'Timeline keeps track of refresh journey of the customer',
+    id: 'TML',
+  },
 ];
