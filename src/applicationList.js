@@ -39,4 +39,9 @@ export const applicationList = [
     description: 'Timeline keeps track of refresh journey of the customer',
     id: 'TML',
   },
+  {
+    friendlyName: 'Consequences',
+    description: 'Responsible for managing HOW Consequence actions are performed for a refresh including any dependencies on previous consequence actions',
+    id: 'CNQ',
+  }
 ];
