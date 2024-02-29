@@ -1,0 +1,49 @@
+configMap:
+  HOLOCRON_MODULE_MAP_URL: https://cdaas.aexp.com/cdaas/one-app/map/epaas-kyc-refresh-intra-kyc-refresh-e3/module-map.json
+#  HTTPS_PORT: '8443'
+#  HTTPS_PRIVATE_KEY_PASS_FILE_PATH: /opt/certs/pass
+#  HTTPS_PRIVATE_KEY_PATH: /opt/certs/key
+#  HTTPS_PUBLIC_CERT_CHAIN_PATH: /opt/certs/cert
+#  HTTPS_TRUSTED_CA_PATH: /opt/certs/ca
+  HTTP_METRICS_PORT: '3005'
+  NODE_ENV: production
+  NODE_EXTRA_CA_CERTS: /opt/certs/AmexInternalRootCA.pem
+  NODE_OPTIONS: --max-http-header-size=32768
+  ONE_CLIENT_CDN_URL: https://cdaas.aexp.com/cdaas/one/
+  ONE_CLIENT_CSP_REPORTING_URL: https://kyc-refresh.aexp.com/_/report/security/csp-violation
+  ONE_CLIENT_REPORTING_URL: https://kyc-refresh.aexp.com/_/report/errors
+  ONE_CLIENT_ROOT_MODULE_NAME: know-your-customer-refresh-root
+  ONE_CONFIG_ENV: e3
+  OPENSHIFT_BUILD_NAMESPACE: kyc-refresh-intra
+  OPENSHIFT_NODEJS_IP: 0.0.0.0
+#  OPENSHIFT_NODEJS_PORT: '8443'
+  EPAAS_ENV: e3_ipc1
+  HTTP_PORT: 8080
+deployment:
+  lifecycle:
+    postStart:
+      exec:
+        command:
+        - /bin/sh
+        - -c
+        - /opt/certs/append-hosts || echo 'Issue running append-hosts. Proceeding
+          with startup...'
+  containerPort: 8080
+  livenessProbe: {}
+  readinessProbe:
+    tcpSocket:
+      port: 8080
+    initialDelaySeconds: 30
+    timeoutSeconds: 15
+    periodSeconds: 10
+    successThreshold: 1
+    failureThreshold: 3
+  resourcesLimitsCPU: '1'
+  resourcesLimitsMemory: 4G
+  resourcesRequestsCPU: 250m
+  resourcesRequestsMemory: 1500M
+hpa:
+  cpuUtilizationPercentage: 75
+  enabled: true
+  maxReplicas: 1
+  minReplicas: 1
