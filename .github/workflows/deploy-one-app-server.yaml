@@ -13,9 +13,9 @@ on:
         description: The PaaS service
         required: true
         type: choice
-        default: kyc-refresh-intra
+        default: kyc-refresh
         options:
-        - kyc-refresh-intra
+        - kyc-refresh
       amex_environment:
         description: Amex environment (E1, E2, E3)
         required: true
