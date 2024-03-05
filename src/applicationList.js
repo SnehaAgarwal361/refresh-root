@@ -43,5 +43,10 @@ export const applicationList = [
     friendlyName: 'Consequences',
     description: 'Responsible for managing HOW Consequence actions are performed for a refresh including any dependencies on previous consequence actions',
     id: 'CNQ',
+  },
+  {
+    friendlyName: 'Business Exception',
+    description: 'Responsible for handling business exceptions',
+    id: 'BEX',
   }
 ];
