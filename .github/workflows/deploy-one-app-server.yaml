@@ -1,0 +1,49 @@
+name: Deploy One App Server
+on:
+  workflow_dispatch:
+    inputs:
+      project:
+        description: The PaaS project
+        required: true
+        type: choice
+        default: kyc-refresh-intra
+        options:
+        - kyc-refresh-intra
+      service:
+        description: The PaaS service
+        required: true
+        type: choice
+        default: kyc-refresh
+        options:
+        - kyc-refresh
+      amex_environment:
+        description: Amex environment (E1, E2, E3)
+        required: true
+        default: E1
+        type: choice
+        options:
+        - E1
+        - E2
+        - E3
+      one_app_version:
+        description: Version of the one-app runtime, if deploying to E1, in the form
+          of the image label (see https://hub.docker.com/r/oneamex/one-app/tags)
+        required: false
+        type: string
+      change_record:
+        description: For operations requiring a change record (i.e. deploying to E3)
+          enter the RFC Number
+        required: false
+jobs:
+  deploy:
+    name: One App to PaaS
+    uses: amex-eng/one-app-actions/.github/workflows/one-app_deploy-or-promote.yml@v1
+    with:
+      paas_project: ${{ github.event.inputs.project }}
+      paas_service: ${{ github.event.inputs.service }}
+      paas_version: hydra
+      amex_environment: ${{ github.event.inputs.amex_environment }}
+      one_app_version: ${{ github.event.inputs.one_app_version }}
+      change_record: ${{ github.event.inputs.change_record }}
+      slack_channel_id: '1234'
+    secrets: inherit

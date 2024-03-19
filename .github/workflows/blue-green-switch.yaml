@@ -1,0 +1,50 @@
+name: Blue/Green Switch
+on:
+  workflow_dispatch:
+    inputs:
+      project:
+        description: 'hydra project name'
+        required: true
+        type: string
+      service:
+        description: 'hydra service name'
+        type: string
+        required: true
+      environment:
+        description: 'Environment to do the switch. Either "e2all" or "e3all"'
+        type: choice
+        required: true
+        default: 'e2all'
+        options:
+          - 'e2all'
+          - 'e3all'
+      rfc:
+        description: 'ITSM RFC'
+        type: string
+        required: false
+        default: ''
+    secrets:
+      ONE_AMEX_CICD_USER:
+        description: One Amex CICD Service account name
+        required: true
+      ONE_AMEX_CICD_PASS:
+        description: One Amex CICD Service account pass
+        required: true
+
+jobs:
+  blue-green-switch:
+    name: Blue Green Switch
+    runs-on: [self-hosted, aexp-ubuntu-22.04, aexp-medium]
+    steps:
+      - name: Conditionally, switch ${{ inputs.environment }}
+        # https://github.aexp.com/amex-ghactions/deploy/releases/tag/v3.0.10
+        uses: amex-ghactions/deploy@v3.0.10
+        id: hydra_switch
+        with:
+          user: ${{ secrets.ONE_AMEX_CICD_USER }}
+          password: ${{ secrets.ONE_AMEX_CICD_PASS }}
+          env: ${{ inputs.environment }}
+          project: ${{ inputs.project }}
+          service: ${{ inputs.service }}
+          rfc: ${{ inputs.rfc }}
+          command: switch
