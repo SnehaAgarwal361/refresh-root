@@ -45,5 +45,6 @@ jobs:
       amex_environment: ${{ github.event.inputs.amex_environment }}
       one_app_version: ${{ github.event.inputs.one_app_version }}
       change_record: ${{ github.event.inputs.change_record }}
-      slack_channel_id: '1234'
+      # maestro-teams channel slack id
+      slack_channel_id: 'C041ED6SFT2'
     secrets: inherit
