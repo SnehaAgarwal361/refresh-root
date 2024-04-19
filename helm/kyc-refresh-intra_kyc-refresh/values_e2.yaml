@@ -43,6 +43,18 @@ deployment:
   resourcesLimitsMemory: 4G
   resourcesRequestsCPU: 250m
   resourcesRequestsMemory: 1.5G
+  readOnlyRootFileSystem: true
+  privileged: false
+  scratchvolume:
+    - mountName: tmp-mount
+      mountPath: /tmp
+  securityContext:
+    allowPrivilegeEscalation: false
+    privileged: false
+    readOnlyRootFilesystem: true
+  volumeMounts:
+    - mountPath: /tmp
+      name: tmp-mount
 monitoring:
   type: prometheus
   path: /metrics
