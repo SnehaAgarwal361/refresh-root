@@ -48,5 +48,10 @@ export const applicationList = [
     friendlyName: 'Business Exception',
     description: 'Responsible for handling business exceptions',
     id: 'BEX',
+  },
+  {
+    friendlyName: 'Timebox',
+    description: 'Responsible for queueing actions so that they are executed only within certain timeframe/day-time window defined by market',
+    id: 'TBX',
   }
 ];
