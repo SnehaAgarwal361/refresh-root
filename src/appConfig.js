@@ -2,7 +2,7 @@ import { timeoutBrowserLikeFetch } from '@americanexpress/browser-like-fetch';
 import csp from './csp';
 
 const oneDataApiUrls = {
-  e1: 'https://functions-dev.aexp.com',
+  e1: 'https://functions-staginghydra-dev.aexp.com',
   e2: 'https://functions-qa.aexp.com',
   e3: 'https://functions.aexp.com',
 };
