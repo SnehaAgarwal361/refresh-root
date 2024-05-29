@@ -53,5 +53,10 @@ export const applicationList = [
     friendlyName: 'Timebox',
     description: 'Responsible for queueing actions so that they are executed only within certain timeframe/day-time window defined by market',
     id: 'TBX',
+  },
+  {
+    friendlyName: 'Trigger 2.0',
+    description: 'Responsible for handling C360 customer prompting',
+    id: 'TG2'
   }
 ];
