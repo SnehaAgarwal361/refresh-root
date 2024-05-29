@@ -56,12 +56,12 @@ export const applicationList = [
   },
   {
     friendlyName: 'Trigger 2.0',
-    description: 'Responsible for handling C360 customer scheduling',
+    description: 'Decides when a refresh should take place and it initiates a refresh for an eligible Customer',
     id: 'TG2'
   },
   {
     friendlyName: 'Tracker 2.0',
-    description: 'Responsible for handling C360 customer prompting',
+    description: 'Keeps track of the prompts that need to be refreshed at a customer and account level',
     id: 'TK2'
   }
 ];
