@@ -56,7 +56,12 @@ export const applicationList = [
   },
   {
     friendlyName: 'Trigger 2.0',
-    description: 'Responsible for handling C360 customer prompting',
+    description: 'Responsible for handling C360 customer scheduling',
     id: 'TG2'
+  },
+  {
+    friendlyName: 'Tracker 2.0',
+    description: 'Responsible for handling C360 customer prompting',
+    id: 'TK2'
   }
 ];
