@@ -65,7 +65,7 @@ export const applicationList = [
     id: 'TK2'
   },
   {
-    friendlyName: 'Customer inbound 2.0',
+    friendlyName: 'Customer Inbound 2.0',
     description: 'Customer Inbound 2 handles the prompting requests from c360',
     id: 'CN2'
   }
