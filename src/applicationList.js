@@ -63,5 +63,10 @@ export const applicationList = [
     friendlyName: 'Tracker 2.0',
     description: 'Keeps track of the prompts that need to be refreshed at a customer and account level',
     id: 'TK2'
+  },
+  {
+    friendlyName: 'Customer Inbound 2.0',
+    description: 'Customer Inbound 2 handles the prompting requests from c360',
+    id: 'CN2'
   }
 ];
