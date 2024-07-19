@@ -34,7 +34,7 @@ on:
 jobs:
   blue-green-switch:
     name: Blue Green Switch
-    runs-on: [self-hosted, aexp-ubuntu-22.04, aexp-medium]
+    runs-on: [aexp-ubuntu-latest-medium]
     steps:
       - name: Conditionally, switch ${{ inputs.environment }}
         # https://github.aexp.com/amex-ghactions/deploy/releases/tag/v3.0.10
