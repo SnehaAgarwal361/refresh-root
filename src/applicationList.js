@@ -68,5 +68,10 @@ export const applicationList = [
     friendlyName: 'Customer Inbound 2.0',
     description: 'Customer Inbound 2 handles the prompting requests from c360',
     id: 'CN2'
+  },
+  {
+    friendlyName: 'Demographics Prompting Event Reporting Gateway',
+    description: 'Responsible for sending prompting reporting data to the appropriate Enterprise platform',
+    id: 'ER2'
   }
 ];
