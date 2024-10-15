@@ -70,7 +70,7 @@ export const applicationList = [
     id: 'CN2'
   },
   {
-    friendlyName: 'Demographics Prompting Event Reporting Gateway',
+    friendlyName: 'Event Reporting Gateway 2.0',
     description: 'Responsible for sending prompting reporting data to the appropriate Enterprise platform',
     id: 'ER2'
   }
