@@ -1,4 +1,4 @@
-require('amex-jest-preset-react/jest-setup');
+// require('amex-jest-preset-react/jest-setup');
 require('@babel/polyfill');
 require('@testing-library/jest-dom/extend-expect');
 
