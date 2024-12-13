@@ -85,8 +85,8 @@
     "@americanexpress/jest-a11y": "^3.0.3",
     "@americanexpress/jest-preset-browser": "^6.0.2",
     "@americanexpress/one-amex-test-utils": "^7.0.0",
-    "@americanexpress/one-app-bundler": "^6.14.2",
-    "@americanexpress/one-app-runner": "^6.14.2",
+    "@americanexpress/one-app-bundler": "^7.1.4",
+    "@americanexpress/one-app-runner": "^6.21.0",
     "@babel/polyfill": "^7.10.4",
     "amex-jest-preset-react": "^8.0.1",
     "babel-eslint": "^10.1.0",
@@ -107,7 +107,8 @@
     "typescript": "^4.4.3"
   },
   "overrides": {
-    "cheerio": "1.0.0-rc.12"
+    "cheerio": "1.0.0-rc.12",
+    "@swc/core": "1.7.24"
   },
   "jest": {
     "preset": "amex-jest-preset-react",
