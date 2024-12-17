@@ -87,11 +87,12 @@
     "react-hook-form": "^7.43.9",
     "react-intl": "^5.24.6",
     "react-redux": "^7.2.6",
-    "semver": "^5.7.2",
+    "semver": "^7.6.3",
     "standard-version": "^9.3.2",
     "terser": "^5.37.0",
     "test": "^3.3.0",
-    "use-authblue-sso": "1.2.2"
+    "use-authblue-sso": "1.2.2",
+    "ws": "^8.18.0"
   },
   "devDependencies": {
     "@americanexpress/jest-a11y": "^3.0.3",
