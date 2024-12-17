@@ -95,7 +95,7 @@
     "ws": "^8.18.0"
   },
   "devDependencies": {
-    "@americanexpress/jest-a11y": "^4.1.0",
+    "@americanexpress/jest-a11y": "^3.1.1",
     "@americanexpress/jest-preset-browser": "^7.2.4",
     "@americanexpress/one-amex-test-utils": "^7.0.7",
     "@americanexpress/one-app-bundler": "^7.1.4",
