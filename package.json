@@ -95,8 +95,8 @@
     "ws": "^8.18.0"
   },
   "devDependencies": {
-    "@americanexpress/jest-a11y": "^4.1.0",
-    "@americanexpress/jest-preset-browser": "^7.2.4",
+    "@americanexpress/jest-a11y": "^3.1.1",
+    "@americanexpress/jest-preset-browser": "^6.1.0",
     "@americanexpress/one-amex-test-utils": "^7.0.7",
     "@americanexpress/one-app-bundler": "^7.1.4",
     "@americanexpress/one-app-runner": "^6.21.0",
@@ -112,7 +112,7 @@
     "eslint-plugin-jest": "^24.5.0",
     "eslint-plugin-jest-dom": "^3.9.2",
     "husky": "^7.0.0",
-    "jest": "^27.5.1",
+    "jest": "^26.6.3",
     "jest-image-snapshot": "^4.0.2",
     "jest-serializer-html": "^7.1.0",
     "react-dom": "^17.0.2",
@@ -124,6 +124,9 @@
     "@swc/core": "1.7.24",
     "puppeteer-core": {
       "ws": "^8.18.0"
+    },
+    "micromatch": {
+      "braces": "^3.0.3"
     }
   },
   "jest": {
