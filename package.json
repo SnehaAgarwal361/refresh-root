@@ -95,7 +95,7 @@
     "ws": "^8.18.0"
   },
   "devDependencies": {
-    "@americanexpress/jest-a11y": "^3.0.3",
+    "@americanexpress/jest-a11y": "^4.1.0",
     "@americanexpress/jest-preset-browser": "^7.2.4",
     "@americanexpress/one-amex-test-utils": "^7.0.7",
     "@americanexpress/one-app-bundler": "^7.1.4",
@@ -121,7 +121,10 @@
   },
   "overrides": {
     "cheerio": "1.0.0-rc.12",
-    "@swc/core": "1.7.24"
+    "@swc/core": "1.7.24",
+    "puppeteer-core": {
+      "ws": "^8.18.0"
+    }
   },
   "jest": {
     "preset": "amex-jest-preset-react",
