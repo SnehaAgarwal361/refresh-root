@@ -1,4 +1,4 @@
-import { getWebdriverClient } from 'one-amex-test-utils';
+import { getWebdriverClient } from '@americanexpress/one-amex-test-utils';
 import { toMatchImageSnapshot } from 'jest-image-snapshot';
 import '@testing-library/jest-dom';
 
