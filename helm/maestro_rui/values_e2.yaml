@@ -5,8 +5,8 @@ configMap:
   # values specific to your tenancy
   HOLOCRON_MODULE_MAP_URL: https://cdaas-test.aexp.com/cdaas/one-app/map/epaas-maestro-rui-e2/module-map.json
   ONE_CLIENT_ROOT_MODULE_NAME: know-your-customer-refresh-root
-  ONE_CLIENT_CSP_REPORTING_URL: https://rui-qa.aexp.com/_/report/security/csp-violation
-  ONE_CLIENT_REPORTING_URL: https://rui-qa.aexp.com/_/report/errors
+  ONE_CLIENT_CSP_REPORTING_URL: https://maestrorui-qa.aexp.com/_/report/security/csp-violation
+  ONE_CLIENT_REPORTING_URL: https://maestrorui-qa.aexp.com/_/report/errors
   # values you probably don't need to change
   NODE_OPTIONS: --max-http-header-size=32768
   ONE_CLIENT_CDN_URL: https://cdaas-test.aexp.com/cdaas/one/
