@@ -1,4 +1,6 @@
 name: Deploy One App Server
+run-name: Deploy OneApp ${{ inputs.one_app_version }} to ${{ inputs.project }}/${{ inputs.service }} ${{ inputs.amex_environment }}
+
 on:
   workflow_dispatch:
     inputs:
@@ -6,34 +8,36 @@ on:
         description: The PaaS project
         required: true
         type: choice
-        default: kyc-refresh-intra
+        default: 'maestro'
         options:
-        - kyc-refresh-intra
+          - 'maestro'
       service:
         description: The PaaS service
         required: true
         type: choice
-        default: kyc-refresh
+        default: 'rui'
         options:
-        - kyc-refresh
+          - 'rui'
       amex_environment:
-        description: Amex environment (E1, E2, E3)
+        description: 'Amex environment (E1, E2, E3)'
         required: true
         default: E1
         type: choice
         options:
-        - E1
-        - E2
-        - E3
+          - E1
+          - E2
+          - E3
       one_app_version:
-        description: Version of the one-app runtime, if deploying to E1, in the form
-          of the image label (see https://hub.docker.com/r/oneamex/one-app/tags)
-        required: false
+        description: Version of the one-app runtime in the form of the image label (see https://hub.docker.com/r/oneamex/one-app/tags)
+        required: true
         type: string
       change_record:
-        description: For operations requiring a change record (i.e. deploying to E3)
-          enter the RFC Number
+        description: 'For operations requiring a change record (i.e. deploying to E3) enter the RFC Number'
         required: false
+      slack_channel_id:
+        description: 'Optional message to a channel of your choosing. Needs to be the alphanumeric channel ID, not the channel name.'
+        required: false
+
 jobs:
   deploy:
     name: One App to PaaS
@@ -41,10 +45,8 @@ jobs:
     with:
       paas_project: ${{ github.event.inputs.project }}
       paas_service: ${{ github.event.inputs.service }}
-      paas_version: hydra
       amex_environment: ${{ github.event.inputs.amex_environment }}
       one_app_version: ${{ github.event.inputs.one_app_version }}
       change_record: ${{ github.event.inputs.change_record }}
-      # maestro-teams channel slack id
-      slack_channel_id: 'C041ED6SFT2'
+      slack_channel_id: 'null' 
     secrets: inherit
