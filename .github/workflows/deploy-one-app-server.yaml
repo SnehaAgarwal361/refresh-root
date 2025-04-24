@@ -8,15 +8,17 @@ on:
         description: The PaaS project
         required: true
         type: choice
-        default: 'maestro'
+        default: 'kyc-refresh-intra'
         options:
+          - 'kyc-refresh-intra'
           - 'maestro'
       service:
         description: The PaaS service
         required: true
         type: choice
-        default: 'rui'
+        default: 'kyc-refresh'
         options:
+          - 'kyc-refresh'
           - 'rui'
       amex_environment:
         description: 'Amex environment (E1, E2, E3)'
