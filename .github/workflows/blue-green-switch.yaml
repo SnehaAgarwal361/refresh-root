@@ -1,50 +1,34 @@
-name: Blue/Green Switch
+name: Blue/Green Switch One App Server
+run-name: Blue/Green Switch ${{ github.event.inputs.project }}/${{ github.event.inputs.project }} ${{ github.event.inputs.amex_environment }}
+
 on:
   workflow_dispatch:
     inputs:
       project:
-        description: 'hydra project name'
+        description: The PaaS project
         required: true
         type: string
-      service:
-        description: 'hydra service name'
-        type: string
-        required: true
-      environment:
-        description: 'Environment to do the switch. Either "e2all" or "e3all"'
-        type: choice
-        required: true
-        default: 'e2all'
-        options:
-          - 'e2all'
-          - 'e3all'
-      rfc:
-        description: 'ITSM RFC'
-        type: string
-        required: false
         default: ''
-    secrets:
-      ONE_AMEX_CICD_USER:
-        description: One Amex CICD Service account name
+      service:
+        description: The PaaS service
         required: true
-      ONE_AMEX_CICD_PASS:
-        description: One Amex CICD Service account pass
+        type: string
+        default: ''
+      amex_environment:
+        description: 'Amex environment to do the switch. Either "e2" or "e3"'
         required: true
+        type: choice
+        default: 'e2'
+        options:
+          - 'e2'
+          - 'e3'
 
 jobs:
   blue-green-switch:
-    name: Blue Green Switch
-    runs-on: [aexp-ubuntu-latest-medium]
-    steps:
-      - name: Conditionally, switch ${{ inputs.environment }}
-        # https://github.aexp.com/amex-ghactions/deploy/releases/tag/v3.0.10
-        uses: amex-ghactions/deploy@v3.0.10
-        id: hydra_switch
-        with:
-          user: ${{ secrets.ONE_AMEX_CICD_USER }}
-          password: ${{ secrets.ONE_AMEX_CICD_PASS }}
-          env: ${{ inputs.environment }}
-          project: ${{ inputs.project }}
-          service: ${{ inputs.service }}
-          rfc: ${{ inputs.rfc }}
-          command: switch
+    name: One App Blue/Green Switch
+    uses: amex-eng/one-app-actions/.github/workflows/one-app_blue-green-switch.yaml@v1
+    with:
+      paas_project: ${{ github.event.inputs.project }}
+      paas_service: ${{ github.event.inputs.service }}
+      amex_environment: ${{ github.event.inputs.amex_environment }}
+    secrets: inherit
