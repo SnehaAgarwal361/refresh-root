@@ -57,6 +57,11 @@ const applications = [
     id: 'TBX',
   },
   {
+    friendlyName: 'Third Party Integration',
+    description: 'Responsible for managing the state of a legal entity refresh and interfacing with third parties',
+    id: 'TPI',
+  },
+  {
     friendlyName: 'Trigger 2.0',
     description: 'Decides when a refresh should take place and it initiates a refresh for an eligible Customer',
     id: 'TG2',
