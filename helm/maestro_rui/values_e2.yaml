@@ -73,5 +73,5 @@ monitoring:
 hpa:
   cpuUtilizationPercentage: 75
   enabled: true
-  maxReplicas: 4
-  minReplicas: 2
+  maxReplicas: 1
+  minReplicas: 1
