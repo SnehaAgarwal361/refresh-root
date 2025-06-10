@@ -1,37 +1,38 @@
 import React, {
   useEffect, useMemo, useRef, useState,
 } from 'react';
-import { FormattedMessage, useIntl } from 'react-intl';
 import {
-  DataTableBodyV2,
-  DataTableCellV2,
-  DataTableHeadCellV2,
-  DataTableHeadV2,
-  DataTableRowV2,
-  DataTableV2,
-  Label,
   Pagination,
   Search,
-  Select,
-  SelectOption,
 } from '@americanexpress/dls-react';
 import { useOneDataFetchye } from '@americanexpress/fetchye-amex';
+import PropTypes from 'prop-types';
 import { ApplicationModal } from './ApplicationModal';
-import styles from '../../styles.scss';
-import { applicationList } from '../../../applicationList';
 import { ErrorMessage, SuccessMessage } from '../../common/PageMessages';
+import styles from './ApplicationProperties.scss';
+import ApplicationPropertiesTable from './applicationPropertiesTable/ApplicationPropertiesTable';
+import useSortTableHandler from './useSortTableHandler';
+import SelectRowsDropdown from './SelectRowsDropdown';
 
-const ApplicationProperties = () => {
-  const { formatMessage } = useIntl();
-  const [applicationFilter, setApplicationFilter] = useState('');
-  const [itemsPerPage, setItemsPerPage] = useState(10);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [tableData, setTableData] = useState(null);
-  const [searchTerm, setSearchTerm] = useState('');
+const ApplicationProperties = ({
+  applicationName,
+  errorMessage,
+  setErrorMessage,
+  successMessage,
+  setSuccessMessage,
+  currentPage,
+  setCurrentPage,
+}) => {
+  const [itemsPerPage, setItemsPerPage] = useState(0);
+  const [tableData, setTableData] = useState([]);
   const [selectedRow, setSelectedRow] = useState();
   const [modalSave, setModalSave] = useState(false);
-  const [errorMessage, setErrorMessage] = useState(undefined);
-  const [successMessage, setSuccessMessage] = useState(undefined);
+  const { sortedDirection, handleSortClick } = useSortTableHandler({
+    tableData,
+    setTableData,
+    setCurrentPage,
+  });
+  const [searchTerm, setSearchTerm] = useState('');
 
   const {
     isLoading,
@@ -41,9 +42,9 @@ const ApplicationProperties = () => {
   } = useOneDataFetchye(
     'ReadKnowYourCustomerRefreshApplicationProperties.v1',
     {
-      defer: applicationFilter?.trim().length <= 1,
+      defer: applicationName?.trim().length <= 1,
       body: {
-        application_name: applicationFilter,
+        application_name: applicationName,
       },
     });
 
@@ -52,12 +53,32 @@ const ApplicationProperties = () => {
     {
       defer: true,
       body: {
-        application_name: applicationFilter,
+        application_name: applicationName,
         property: {
           ...selectedRow?.application,
         },
       },
     });
+
+  const searchTermHandler = (e) => {
+    const inputValue = e.target.value;
+    setSearchTerm(inputValue);
+    setCurrentPage(1);
+    if (inputValue?.trim() === '') {
+      setTableData(fetchData.body);
+    } else {
+      const filteredData = fetchData.body.filter(
+        (row) => row.name?.toLowerCase()
+          .includes(inputValue.toLowerCase())
+                        || row.group?.toLowerCase()
+                          .includes(inputValue.toLowerCase())
+                        || row.value?.toLowerCase()
+                          .includes(inputValue.toLowerCase())
+                        || row.description?.toLowerCase()
+                          .includes(inputValue.toLowerCase()));
+      setTableData(filteredData);
+    }
+  };
 
   useEffect(() => { // Changes on clicking save
     if (modalSave && selectedRow) {
@@ -77,26 +98,28 @@ const ApplicationProperties = () => {
       );
       setModalSave(false);
     }
-  }, [selectedRow, modalSave, updatePropertyRun, fetchRun]);
+  }, [selectedRow, modalSave, updatePropertyRun, fetchRun, setErrorMessage, setSuccessMessage]);
 
   useEffect(() => { // Changes on selecting an application
-    if (!isLoading && !fetchError && fetchData?.body) {
-      setTableData(fetchData.body);
+    if (!isLoading && !fetchError) {
+      if (Array.isArray(fetchData?.body) && fetchData.body.length > 0) {
+        const sortedData = [...fetchData.body].sort((a, b) => a.name.localeCompare(b.name));
+        setTableData(sortedData);
+        setItemsPerPage(sortedData.length);
+      } else if (fetchData?.body?.length === 0) {
+        setErrorMessage('Empty response body returned from One Data.');
+      }
     } else {
       setTableData(null);
     }
-  }, [fetchData, fetchError, isLoading]);
-
-  const modalRef = useRef();
+  }, [fetchError, isLoading, applicationName]);
 
   const handleDropDownChange = (event) => {
     setItemsPerPage(Number(event.target.value));
     setCurrentPage(1);
   };
 
-  const handlePageChange = (page) => {
-    setCurrentPage(page);
-  };
+  const modalRef = useRef();
 
   const paginatedRows = useMemo(() => {
     const markup = [];
@@ -104,44 +127,14 @@ const ApplicationProperties = () => {
     if (!tableData) return markup;
 
     const beginIndex = (currentPage - 1) * itemsPerPage;
-    let endIndex = beginIndex + itemsPerPage;
+    let endIndex = Math.min(beginIndex + itemsPerPage, tableData.length);
     endIndex = endIndex < tableData.length ? beginIndex + itemsPerPage : tableData.length;
     for (let i = beginIndex; i < endIndex; i += 1) {
       markup.push(tableData[i]);
     }
     return markup;
-  }, [tableData, currentPage, itemsPerPage]);
-
-  const searchTermHandler = (e) => {
-    setCurrentPage(1);
-    if (tableData) {
-      const inputValue = e.target.value;
-      if (inputValue?.trim() === '') {
-        setTableData(fetchData.body);
-      } else {
-        const filteredData = tableData.filter(
-          (row) => row.application_name?.toLowerCase()
-            .includes(inputValue.toLowerCase())
-            || row.name?.toLowerCase()
-              .includes(inputValue.toLowerCase())
-            || row.group?.toLowerCase()
-              .includes(inputValue.toLowerCase())
-            || row.value?.toLowerCase()
-              .includes(inputValue.toLowerCase())
-            || row.description?.toLowerCase()
-              .includes(inputValue.toLowerCase()));
-        setTableData(filteredData);
-      }
-      setSearchTerm(inputValue);
-    }
-  };
-
-  const onApplicationFilterChange = (e) => {
-    setApplicationFilter(e.target.value);
-    setErrorMessage(undefined);
-    setSuccessMessage(undefined);
-    setCurrentPage(1);
-  };
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- sortedDirection affects order of data
+  }, [tableData, currentPage, itemsPerPage, sortedDirection]);
 
   const saveApplication = (rowData) => {
     setSelectedRow(rowData);
@@ -151,109 +144,66 @@ const ApplicationProperties = () => {
   const getTable = () => {
     if (!isLoading && tableData != null) {
       return (
-        <>
-          <div className="flex flex-justify-end col-md-12">
-            <Label className="flex flex-align-center pad-1-r">
-              <FormattedMessage id="records.per.page" />
-            </Label>
-            <div className="col-md-1">
-              <Select
-                id="dt-v2-p-select"
-                data-testid="itemsPageDropDown"
-                onChange={handleDropDownChange}
-                value={itemsPerPage}
-              >
-                <SelectOption value="10">10</SelectOption>
-                <SelectOption value="20">20</SelectOption>
-                <SelectOption value="30">30</SelectOption>
-              </Select>
+        <div className={styles.app_properties_table_bg}>
+          <div className="flex flex-direction-row flex-justify-between pad-1">
+            <div className="col-md-4 pad-0-l">
+              <Search
+                id="df-search"
+                data-testid="searchTerm"
+                value={searchTerm}
+                onChange={searchTermHandler}
+                placeholder="Search application properties"
+              />
             </div>
+            <SelectRowsDropdown
+              handleDropDownChange={handleDropDownChange}
+              itemsPerPage={itemsPerPage}
+              tableLength={tableData.length}
+            />
           </div>
           <div className="row margin-1">
-            <DataTableV2 small={true} id="tablev2-small-instance">
-              <DataTableHeadV2>
-                <DataTableRowV2 className="body-1">
-                  <DataTableHeadCellV2><FormattedMessage id="property.app.name" /></DataTableHeadCellV2>
-                  <DataTableHeadCellV2><FormattedMessage id="property.name" /></DataTableHeadCellV2>
-                  <DataTableHeadCellV2><FormattedMessage id="group" /></DataTableHeadCellV2>
-                  <DataTableHeadCellV2><FormattedMessage id="description" /></DataTableHeadCellV2>
-                  <DataTableHeadCellV2><FormattedMessage id="value" /></DataTableHeadCellV2>
-                </DataTableRowV2>
-              </DataTableHeadV2>
-              <DataTableBodyV2>
-                {paginatedRows.map((row, i) => (
-                  <DataTableRowV2
-                    key={`${row.name}-${row.application_name}`}
-                    onClick={() => modalRef.current.openModal(row, i)}
-                  >
-                    <DataTableCellV2>{row.application_name}</DataTableCellV2>
-                    <DataTableCellV2>{row.name}</DataTableCellV2>
-                    <DataTableCellV2>{row.group}</DataTableCellV2>
-                    <DataTableCellV2>{row.description}</DataTableCellV2>
-                    <DataTableCellV2>{row.value}</DataTableCellV2>
-                  </DataTableRowV2>
-                )
-                )}
-              </DataTableBodyV2>
-            </DataTableV2>
+            <ApplicationPropertiesTable
+              paginatedRows={paginatedRows}
+              modalRef={modalRef}
+              sortedDirection={sortedDirection}
+              handleSortClick={handleSortClick}
+            />
             {tableData.length > 0 && (
-              <Pagination
-                data-testid="selectPageNumber"
-                theme={{ background: 'transparent' }}
-                selected={currentPage}
-                onChange={handlePageChange}
-                total={Math.ceil(tableData.length / itemsPerPage)}
-              />
+            <Pagination
+              data-testid="selectPageNumber"
+              theme={{ background: 'transparent' }}
+              selected={currentPage}
+              onChange={(page) => setCurrentPage(page)}
+              total={Math.ceil(tableData.length / itemsPerPage)}
+            />
             )}
           </div>
-        </>
+        </div>
       );
-    } return <div />;
+    }
+    return <div />;
   };
 
   return (
-    <>
-      <h2>
-        <div className="text-align-center margin-2-b heading-4">Application Properties</div>
-      </h2>
+    <div data-testid="applicationPropertiesSection">
       <ApplicationModal ref={modalRef} saveApplication={saveApplication} />
-      <div className="pad-2-md-up pad-1-sm-down flex shadow-2">
-        <div className="col-sm-12 row col-md-3 col-md-offset-3">
-          <Label htmlFor="accountFilterSelect">
-            <FormattedMessage id="applicationFilter.label" />
-          </Label>
-          <Select
-            id="applicationFilterSelect"
-            className="fluid"
-            value={applicationFilter}
-            data-testid="applicationFilterSelect"
-            onChange={onApplicationFilterChange}
-          >
-            <SelectOption value="">
-              {formatMessage({ id: 'filter.default.option' })}
-            </SelectOption>
-            {applicationList.map((option) => (
-              <SelectOption value={option.id} key={option.id}>
-                {option.friendlyName}
-              </SelectOption>
-            ))}
-          </Select>
-        </div>
-        <div className={`${styles.searchFieldPadTop} col-sm-12 col-md-3 pad-1-sm-down margin-2-t`}>
-          <Search
-            id="df-search"
-            data-testid="searchTerm"
-            value={searchTerm}
-            onChange={searchTermHandler}
-            placeholder={formatMessage({ id: 'search.field.placeholder' })}
-          />
-        </div>
+      <div className="margin-1">
+        <SuccessMessage message={successMessage} setSuccess={setSuccessMessage} />
+        <ErrorMessage message={errorMessage} setError={setErrorMessage} />
       </div>
-      <SuccessMessage message={successMessage} setSuccess={setSuccessMessage} />
-      <ErrorMessage message={errorMessage} setError={setErrorMessage} />
       {getTable()}
-    </>
+    </div>
   );
 };
 
 export default ApplicationProperties;
+
+ApplicationProperties.propTypes = {
+  applicationName: PropTypes.string,
+  errorMessage: PropTypes.string,
+  setErrorMessage: PropTypes.func,
+  successMessage: PropTypes.string,
+  setSuccessMessage: PropTypes.func,
+  currentPage: PropTypes.number,
+  setCurrentPage: PropTypes.func,
+};

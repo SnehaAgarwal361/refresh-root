@@ -13,7 +13,7 @@ import {
   ModalFooter,
   Button,
 } from '@americanexpress/dls-react';
-import { useAdsId } from '../../common/UserState';
+import { useAdsId } from '../../common/authentication/UserState';
 
 export const ApplicationModal = forwardRef((props, ref) => {
   const [showModal, setShowModal] = useState(false);
@@ -50,7 +50,7 @@ export const ApplicationModal = forwardRef((props, ref) => {
   return (
     <>
       {showModal && (
-        <Modal onClose={toggleModal}>
+        <Modal onClose={toggleModal} data-testid="applicationModal">
           <ModalHeader>
             <h2 className="fluid heading-3">
               <FormattedMessage id="modal.head" />
@@ -70,7 +70,7 @@ export const ApplicationModal = forwardRef((props, ref) => {
             <Button data-testid="modalSaveBtn" className="margin-1-r" styleType="primary" onClick={saveApplication}>
               <FormattedMessage id="save.button.label" />
             </Button>
-            <Button styleType="primary" onClick={toggleModal}>
+            <Button styleType="primary" onClick={toggleModal} data-testid="modalCloseButton">
               <FormattedMessage id="close.button.label" />
             </Button>
           </ModalFooter>

@@ -1,4 +1,4 @@
-import AppConfig from '../src/appConfig';
+import AppConfig from '../src/config/appConfig';
 
 describe('state config', () => {
   it('should be valid', () => {

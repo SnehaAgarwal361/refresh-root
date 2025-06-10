@@ -1,3 +1,3 @@
-import ModuleContainer from './components/KnowYourCustomerRefreshRoot';
+import ModuleContainer from './KnowYourCustomerRefreshRoot';
 
 export default ModuleContainer;

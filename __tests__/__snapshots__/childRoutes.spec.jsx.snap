@@ -6,13 +6,5 @@ Array [
     component={[Function]}
     path="/"
   />,
-  <Route
-    component={[Function]}
-    path="/application-properties"
-  />,
-  <Route
-    component={[Function]}
-    path="/quartz"
-  />,
 ]
 `;

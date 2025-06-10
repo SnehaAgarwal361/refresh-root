@@ -4,12 +4,12 @@ import { Provider } from 'react-redux';
 import React from 'react';
 import { Map as iMap } from 'immutable';
 import { AuthBlueProvider, AuthBlueSessionTimeoutModal, OneDataProvider } from 'use-authblue-sso';
-import { AuthBlueSso } from '../../src/components/common/AuthBlueSso';
+import { AuthBlueSso } from '../../src/components/common/authentication/AuthBlueSso';
 import { getMockComponent } from './renderWithProviders';
-import AuthBlueSsoBypass from '../../src/components/common/AuthBlueSsoBypass';
+import AuthBlueSsoBypass from '../../src/components/common/authentication/AuthBlueSsoBypass';
 
 jest.mock('use-authblue-sso');
-jest.mock('../../src/components/common/AuthBlueSsoBypass');
+jest.mock('../../src/components/common/authentication/AuthBlueSsoBypass');
 const defaultState = iMap({ config: { intranetEnv: 'e0' } });
 export const renderAuthBlueSso = (children, stateUpdate = null) => {
   jest.resetAllMocks();

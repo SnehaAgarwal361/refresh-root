@@ -13,11 +13,12 @@ export function SuccessMessage({
         filled={true}
         dismissible={true}
         onDismiss={() => setSuccess(undefined)}
+        data-testid="success-message"
       > {message}
       </PageLevelMessage>
     );
   }
-  return <div />;
+  return <div data-testid="empty-success-message" />;
 }
 
 SuccessMessage.propTypes = {
@@ -35,11 +36,12 @@ export function ErrorMessage({
         type="warning"
         dismissible={true}
         onDismiss={() => setError && setError(undefined)}
+        data-testid="error-message"
       > {message}
       </PageLevelMessage>
     );
   }
-  return <div />;
+  return <div data-testid="empty-error-message" />;
 }
 
 ErrorMessage.propTypes = {

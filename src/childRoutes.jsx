@@ -1,19 +1,10 @@
 import React from 'react';
 import { Route } from '@americanexpress/one-app-router';
-import Home from './components/Home';
-import ApplicationProperties from './components/pages/applicationProperties/ApplicationProperties';
-import { Quartz } from './components/pages/quartz/Quartz';
-import { applicationPropertiesRoute, quartzRoute } from './constants';
+import ApplicationConfigurationsPage from './components/pages/ApplicationConfigurationsPage';
 
 const childRoutes = () => [
   // eslint-disable-next-line react/jsx-key -- Key not require
-  <Route path="/" component={Home} />,
-  <Route
-    key={applicationPropertiesRoute}
-    path={applicationPropertiesRoute}
-    component={ApplicationProperties}
-  />,
-  <Route key={quartzRoute} path={quartzRoute} component={Quartz} />,
+  <Route key="/" path="/" component={ApplicationConfigurationsPage} />,
 ];
 
 export default childRoutes;
