@@ -1,9 +1,10 @@
 {
   "name": "know-your-customer-refresh-root",
-  "version": "1.10.0",
+  "version": "1.12.0",
   "description": "Used to create UI for all the configurable properties in the international kyc refresh application",
   "contributors": [
-    "Nagaraj VC <nagaraj.v.chandrashekar@amex.com>",
+    "Pip Turner <Pip.I.Turner@amex.com>",
+    "Wan Sze Lee <WanSze.Lee1@aexp.com>",
     "Sreeram Iyer <Sreeram.Iyer@aexp.com>"
   ],
   "scripts": {
