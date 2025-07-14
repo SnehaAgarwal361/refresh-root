@@ -10,8 +10,8 @@ that allows the KYC team to change configurable properties and scheduled jobs wi
 [MAESTRO](https://enterprise-confluence.aexp.com/confluence/x/RytWJQ) application.
 
 ## Know Your Customer Refresh UI URLs
-| [E1](https://kyc-refresh-dev.aexp.com) | [E2](https://kyc-refresh-qa.aexp.com) | [E3](https://kyc-refresh.aexp.com/) |
-|----------------------------------------|---------------------------------------|-------------------------------------|
+| [E1](https://maestrorui-dev.aexp.com) | [E2](https://maestrorui-qa.aexp.com) | [E3](https://maestrorui.aexp.com/) |
+|---------------------------------------|--------------------------------------|------------------------------------|
 
 ## Overview
 To understand the module architecture and how they are integrated with the one app service please navigate to 

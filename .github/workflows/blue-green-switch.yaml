@@ -8,12 +8,12 @@ on:
         description: The PaaS project
         required: true
         type: string
-        default: ''
+        default: 'maestro'
       service:
         description: The PaaS service
         required: true
         type: string
-        default: ''
+        default: 'rui'
       amex_environment:
         description: 'Amex environment to do the switch. Either "e2" or "e3"'
         required: true
