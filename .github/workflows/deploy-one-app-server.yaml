@@ -8,17 +8,15 @@ on:
         description: The PaaS project
         required: true
         type: choice
-        default: 'kyc-refresh-intra'
+        default: 'maestro'
         options:
-          - 'kyc-refresh-intra'
           - 'maestro'
       service:
         description: The PaaS service
         required: true
         type: choice
-        default: 'kyc-refresh'
+        default: 'rui'
         options:
-          - 'kyc-refresh'
           - 'rui'
       amex_environment:
         description: 'Amex environment (E1, E2, E3)'
@@ -30,7 +28,7 @@ on:
           - E2
           - E3
       one_app_version:
-        description: Version of the one-app runtime in the form of the image label (see https://hub.docker.com/r/oneamex/one-app/tags)
+        description: 'Version of the one-app runtime (see https://github.aexp.com/amex-eng/one-app/releases) or the SHA of the image already deployed in E1'
         required: true
         type: string
       change_record:
