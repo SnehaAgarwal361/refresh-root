@@ -1,5 +1,5 @@
 // require('amex-jest-preset-react/jest-setup');
-require('@babel/polyfill');
+require('core-js/stable');
 // require('@testing-library/jest-dom/extend-expect');
 
 // prevents us from needing to mock out content-security-policy lib which requires this to be set
