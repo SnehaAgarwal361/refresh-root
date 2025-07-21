@@ -2,18 +2,18 @@
 
 exports[`TestableKnowYourCustomerRefreshRoot loadModuleData should call languageData 1`] = `
 [MockFunction] {
-  "calls": Array [
-    Array [
+  "calls": [
+    [
       "know-your-customer-refresh-root",
-      Object {
+      {
         "fallbackLocale": "en-US",
       },
     ],
   ],
-  "results": Array [
-    Object {
+  "results": [
+    {
       "type": "return",
-      "value": Object {
+      "value": {
         "fallbackLocale": "en-US",
         "message": "lang pack async state for know-your-customer-refresh-root",
       },
@@ -27,7 +27,7 @@ exports[`TestableKnowYourCustomerRefreshRoot should render as expected module sh
   <IntlProviderMock
     locale="localeMock"
     messages={
-      Object {
+      {
         "intlKeyMock": "intlValueMock",
       }
     }
